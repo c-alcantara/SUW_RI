@@ -1,4 +1,4 @@
-"use client";
+
 import { useState, useEffect } from "react";
 import { Client } from "appwrite";
 import RegistrationForm from "../components/RegistrationForm";
