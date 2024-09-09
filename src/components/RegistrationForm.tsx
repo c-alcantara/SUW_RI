@@ -3,7 +3,6 @@ import { Label } from "../styles/ui/label";
 import { Input } from "../styles/ui/input";
 import { Button } from "../styles/ui/button";
 import { CheckIcon } from "@heroicons/react/24/solid";
-import { createDocument } from "../appwrite";
 
 export default function RegistrationForm() {
   const [formData, setFormData] = useState({
@@ -32,22 +31,21 @@ export default function RegistrationForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await createDocument(
-        process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
-        process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID!,
-        {
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          affiliation: formData.affiliation,
-        }
-      );
+      const response = await fetch('/api/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-      if (response) {
+      const data = await response.json();
+
+      if (data.success) {
         setIsSubmitted(true);
-        console.log("Form submitted:", response);
+        console.log("Form submitted:", data);
       } else {
-        console.error("Error submitting form:", response);
+        console.error("Error submitting form:", data.error);
       }
     } catch (error) {
       console.error("Error submitting form:", error);
