@@ -88,38 +88,44 @@
 }
 
 
+/* start background */
+body {
+  background: #000;
+  overflow: hidden;
+}
 
 .background {
-  animation: skew 20s alternate  ease-in-out FORWARDS;
+  animation: skew 10s ease-in-out forwards .5s;
+
   width: 100vw;
   height: 100vh;
   background-image: linear-gradient(
       to left,
-      #fff 0,
-      #fff 20px,
-      transparent 20px,
-      transparent 20px
+      #fff 30px,
+      #fff 30px,
+      transparent 30px,
+      transparent 30px
     ),
-    linear-gradient(#fff 0, #fff 10px, #000 10px, #000 20px);
-  background-size: 20px 20px;
+    linear-gradient(#ffffff 30px, #000000 30px, rgba(0, 0, 0, 0) 300px, rgba(0, 0, 0, 0) 300px);
+  background-size: 30px 30px;
   background-position: center;
+
 }
 @keyframes skew {
   from {
-    transform: skew(0);
+
   }
   50% {
+    transform: skew(360deg);
     background-size: 100% 100%;
   }
-  to {
-    transform: skew(180deg);
-  }
+
 }
 /* end background */
 .title {
   user-select: none;
   text-transform: uppercase;
-  font-size: 10vw;
+  font-size: 8vw;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -127,11 +133,81 @@
   text-align: center;
   text-wrap: balance;
   font-weight: 900;
-  mix-blend-mode: difference;
+
   color: #fff;
   line-height: 1.3em;
   letter-spacing: 0.1ch;
 }
 html {
   font-family: system-ui, sans-serif;
+}
+.fade-in {
+
+  animation: fadeIn .5s ; /* Fade in animation */
+}
+
+.blur-effect {
+  filter: blur(5px); /* Initial blur effect */
+  animation: blurOut 1s forwards; /* Blur out animation */
+}
+
+@keyframes fadeOut {
+  to {
+    filter: blur(50px); /* Remove blur */
+    opacity: 0;
+
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    filter: blur(50px); /* Remove blur */
+    scale: .75;
+    opacity: 0;
+  }
+  to {
+    filter: blur(0px); /* Remove blur */
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+
+.fade-out {
+   filter: blur(0px); /* Remove blur */
+ opacity: 100;
+  animation: fadeOut 1s forwards 5.1s; /* Fade in animation */
+
+}
+
+@keyframes fadeOutWord {
+  from {
+    opacity: 1;
+
+  }
+  to {
+    opacity: 0;
+
+  }
+}
+
+@keyframes fadeInWord {
+  from {
+    opacity: 0;
+
+
+  }
+  to {
+    opacity: 1;
+
+
+  }
+}
+
+.fade-out-word {
+  animation: fadeOutWord 0.4s forwards;
+}
+
+.fade-in-word {
+  animation: fadeInWord 0.4s forwards;
 }

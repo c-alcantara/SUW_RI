@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import RegistrationForm from "../components/RegistrationForm";
-
 import Background from "../components/Background";
 
 const words = ["INNOVATORS", "BUILDING", "TODAY", "FOR", "THE", "WORLD", "OF", "TOMORROW"];
@@ -15,21 +14,33 @@ export default function Home() {
     const timer2 = setTimeout(() => {
       setShowForm(true);
       setShowBckg(false);
-    }, 5150);
+    }, 5700);
 
     return () => clearTimeout(timer2);
   }, []);
 
   useEffect(() => {
-    const wordTimer = setInterval(() => {
+    const duration = currentWordIndex === 0 ? 700 : 420; // 650 seconds for the first word, 4 seconds for others
+
+    const changeWord = () => {
       setFadeClass("fade-out-word");
       setTimeout(() => {
-        setCurrentWordIndex((prevIndex) => (prevIndex + 1) % words.length);
+        if (currentWordIndex <= words.length - 1) {
+          setCurrentWordIndex((prevIndex) => prevIndex + 1);
+        } else {
+          // If it's the last word, do not change the index
+          setFadeClass("fade-in-word"); // Just fade in the last word
+          return; // Exit to prevent further changes
+        }
         setFadeClass("fade-in-word");
       }, 200);
-    }, 400);
+    };
 
-    return () => clearInterval(wordTimer);
+    const timer = setTimeout(() => {
+      changeWord();
+    }, duration); // Use the calculated duration
+
+    return () => clearTimeout(timer);
   }, [currentWordIndex]);
 
   return (
