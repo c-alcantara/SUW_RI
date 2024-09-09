@@ -37,7 +37,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
         console.error('Error creating document:', error);
         res.statusCode = 500;
         res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify({ success: false, error: error.message }));
+        res.end(JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'An unknown error occurred' }));
       }
     });
   } else {

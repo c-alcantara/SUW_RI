@@ -2,7 +2,8 @@
 import { useState, useEffect } from "react";
 import { Client } from "appwrite";
 import RegistrationForm from "../components/RegistrationForm";
-import Background from '../components/background';
+
+import Background from "../components/Background";
 import { Pause } from "lucide-react";
 
 
