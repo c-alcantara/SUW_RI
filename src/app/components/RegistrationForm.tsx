@@ -1,14 +1,14 @@
 'use client'
 
 import { useState } from "react";
-import { Label } from "./ui/label";
-import { Checkbox } from "./ui/checkbox";
-import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
-import { Button } from "./ui/button";
-import { Card } from "./ui/card";
+import { Label } from "../components/ui/label";
+import { Checkbox } from "../components/ui/checkbox";
+import { Input } from "../components/ui/input";
+import { Textarea } from "../components/ui/textarea";
+import { Button } from "../components/ui/button";
+import { Card } from "../components/ui/card";
 import { CheckIcon } from '@heroicons/react/24/solid'; // Updated import path
-import { databases } from "./appwriteConfig";
+import { databases } from "../appwriteConfig";
 
 export default function RegistrationForm() {
   const [formData, setFormData] = useState({
