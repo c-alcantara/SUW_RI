@@ -47,3 +47,7 @@ export default async function handler(
     res.status(405).json({ success: false, error: "Method not allowed" });
   }
 }
+
+console.log("Project ID:", projectId);
+console.log("Database ID:", databaseId);
+console.log("Collection ID:", collectionId);
