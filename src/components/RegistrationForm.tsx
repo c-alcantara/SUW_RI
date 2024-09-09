@@ -14,18 +14,12 @@ export default function RegistrationForm() {
 
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setFormData((prev) => ({ ...prev, phone: parseInt(value, 10) }));
-  };
-
-  const handleAffiliationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFormData((prev) => ({ ...prev, affiliation: e.target.value }));
+    setFormData((prev) => ({
+      ...prev,
+      [name]: name === "phone" ? parseInt(value, 10) : value,
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -58,51 +52,24 @@ export default function RegistrationForm() {
       className="space-y-6 max-w-md mx-auto p-6 backdrop-blur-2xl border-2 border-white bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.7)] rounded-2xl"
     >
       <h2 className="text-2xl font-bold mb-0 p-0">Startup Week Rhode Island</h2>
-      <p className="mt-[-4px] mb-0">
-        Friday September 20th - Friday September 27th
-      </p>
+      <p className="mt-[-4px] mb-0">Friday September 20th - Friday September 27th</p>
       <div className="space-y-4">
-        <div>
-          <Label className="font-bold" htmlFor="name">
-            Name
-          </Label>
-          <Input
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-            required
-            className="rounded"
-          />
-        </div>
-        <div>
-          <Label className="font-bold" htmlFor="email">
-            Email
-          </Label>
-          <Input
-            id="email"
-            name="email"
-            type="email"
-            value={formData.email}
-            onChange={handleInputChange}
-            required
-            className="rounded"
-          />
-        </div>
-        <div>
-          <Label className="font-bold" htmlFor="phone">
-            Phone Number
-          </Label>
-          <Input
-            id="phone"
-            name="phone"
-            type="number"
-            value={formData.phone}
-            onChange={handlePhoneChange}
-            required
-            className="rounded"
-          />
-        </div>
+        {["name", "email", "phone"].map((field) => (
+          <div key={field}>
+            <Label className="font-bold" htmlFor={field}>
+              {field.charAt(0).toUpperCase() + field.slice(1)}
+            </Label>
+            <Input
+              id={field}
+              name={field}
+              type={field === "phone" ? "number" : "text"}
+              value={formData[field as keyof typeof formData]}
+              onChange={handleInputChange}
+              required
+              className="rounded"
+            />
+          </div>
+        ))}
         <div>
           <Label className="font-bold" htmlFor="affiliation">
             Affiliation
@@ -111,7 +78,7 @@ export default function RegistrationForm() {
             id="affiliation"
             name="affiliation"
             value={formData.affiliation}
-            onChange={handleAffiliationChange}
+            onChange={handleInputChange}
             className="rounded"
           >
             <option value="Participant">Participant</option>
