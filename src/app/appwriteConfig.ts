@@ -6,7 +6,7 @@ console.log('API Key:', process.env.REACT_APP_APPWRITE_API_KEY);
 
 const client = new Client()
   .setEndpoint(process.env.REACT_APP_APPWRITE_ENDPOINT as string) // Your Appwrite Endpoint
-  .setProject(process.env.REACT_APP_APPWRITE_PROJECT_ID as string) // Your project ID
+  .setProject(process.env.REACT_APP_APPWRITE_PROJECT_ID as string); // Your project ID
   // .setKey(process.env.REACT_APP_APPWRITE_API_KEY as string); // Your API key
 
 const databases = new Databases(client);
