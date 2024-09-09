@@ -13,7 +13,7 @@ if (!projectId) {
 
 client
   .setEndpoint("https://cloud.appwrite.io/v1") // Make sure this is your correct Appwrite endpoint
-  .setProject(projectId);
+  .setProject(projectId as string); // Type assertion to ensure it's a string
 
 const databases = new Databases(client);
 
