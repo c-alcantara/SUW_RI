@@ -1,12 +1,12 @@
 'use client'
 
 import { useState } from "react";
-import { Label } from "../components/ui/label";
-import { Checkbox } from "../components/ui/checkbox";
-import { Input } from "../components/ui/input";
-import { Textarea } from "../components/ui/textarea";
-import { Button } from "../components/ui/button";
-import { Card } from "../components/ui/card";
+import { Label } from "../styles/ui/label";
+import { Checkbox } from "../styles/ui/checkbox";
+import {  Input } from "../styles/ui/input";
+import { Textarea } from "../styles/ui/textarea";
+import { Button } from "../styles/ui/button";
+import { Card } from "../styles/ui/card";
 import { CheckIcon } from '@heroicons/react/24/solid'; // Updated import path
 import { databases } from "../appwriteConfig";
 
