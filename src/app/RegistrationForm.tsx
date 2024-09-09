@@ -34,26 +34,19 @@ export default function RegistrationForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch('/api/submitForm', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
+      const result = await databases.createDocument(
+        "66d77f5b00206d7de9dc", // databaseId
+        "66d77fdd0033b122c7bd", // collectionId
+        "unique()", // documentId, use 'unique()' for auto-generated ID
+        formData, // data
+        ['read("any")'] // permissions (optional)
+      );
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        alert(errorText);
-        throw new Error(errorText);
-      }
-
-      const result = await response.json();
-      if (result.success) {
+      if (result) {
         setIsSubmitted(true);
-        console.log('Form submitted:', result.data);
+        console.log('Form submitted:', result);
       } else {
-        console.error('Error submitting form:', result.error);
+        console.error('Error submitting form:', result);
       }
     } catch (error) {
       console.error('Error submitting form:', error);
