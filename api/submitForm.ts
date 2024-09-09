@@ -5,7 +5,7 @@ const client = new Client();
 client
   .setEndpoint('https://cloud.appwrite.io/v1') // Your Appwrite endpoint
   .setProject(process.env.APPWRITE_PROJECT_ID) // Use environment variables
-  .setKey(process.env.APPWRITE_API_KEY); // Use environment variables
+  // .setKey(process.env.APPWRITE_API_KEY); // Use environment variables
 
 const databases = new Databases(client);
 
