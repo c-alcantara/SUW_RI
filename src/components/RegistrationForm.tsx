@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Label } from "../styles/ui/label";
 import { Input } from "../styles/ui/input";
@@ -12,7 +11,10 @@ export default function RegistrationForm() {
     name: "",
     email: "",
     phone: "",
-    affiliation: "",
+    affiliation: {
+      student: false,
+      professional: false,
+    },
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -22,28 +24,35 @@ export default function RegistrationForm() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
- 
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  try {
-    const response = await fetch("/api/submit", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      affiliation: { ...prev.affiliation, [name]: checked },
+    }));
+  };
 
-    if (response.ok) {
-      setIsSubmitted(true);
-      console.log("Form submitted:", await response.json());
-    } else {
-      console.error("Error submitting form:", await response.json());
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("/api/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+        console.log("Form submitted:", await response.json());
+      } else {
+        console.error("Error submitting form:", await response.json());
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
     }
-  } catch (error) {
-    console.error("Error submitting form:", error);
-  }
-};
+  };
 
   return (
     <form
@@ -65,6 +74,7 @@ const handleSubmit = async (e: React.FormEvent) => {
             value={formData.name}
             onChange={handleInputChange}
             required
+            className="rounded"
           />
         </div>
         <div>
@@ -78,6 +88,7 @@ const handleSubmit = async (e: React.FormEvent) => {
             value={formData.email}
             onChange={handleInputChange}
             required
+            className="rounded"
           />
         </div>
         <div>
@@ -91,18 +102,33 @@ const handleSubmit = async (e: React.FormEvent) => {
             value={formData.phone}
             onChange={handleInputChange}
             required
+            className="rounded"
           />
         </div>
         <div>
-          <Label className="font-bold" htmlFor="affiliation">
-            Affiliation
-          </Label>
-          <Input
-            id="affiliation"
-            name="affiliation"
-            value={formData.affiliation}
-            onChange={handleInputChange}
-          />
+          <Label className="font-bold">Affiliation</Label>
+          <div className="flex items-center space-x-4">
+            <label className="flex items-center">
+              <input
+                type="checkbox"
+                name="student"
+                checked={formData.affiliation.student}
+                onChange={handleCheckboxChange}
+                className="rounded"
+              />
+              <span className="ml-2">Student</span>
+            </label>
+            <label className="flex items-center">
+              <input
+                type="checkbox"
+                name="professional"
+                checked={formData.affiliation.professional}
+                onChange={handleCheckboxChange}
+                className="rounded"
+              />
+              <span className="ml-2">Professional</span>
+            </label>
+          </div>
         </div>
       </div>
       <Button
