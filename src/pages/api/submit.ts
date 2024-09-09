@@ -3,11 +3,13 @@ import { Client, Databases, ID } from "appwrite";
 
 const client = new Client();
 
-const projectId = process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID;
+const projectId = process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID as string;
+const databaseId = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string;
+const collectionId = process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID as string;
 
-if (!projectId) {
+if (!projectId || !databaseId || !collectionId) {
   throw new Error(
-    "NEXT_PUBLIC_APPWRITE_PROJECT_ID environment variable is not set"
+    "One or more environment variables are not set: NEXT_PUBLIC_APPWRITE_PROJECT_ID, NEXT_PUBLIC_APPWRITE_DATABASE_ID, NEXT_PUBLIC_APPWRITE_COLLECTION_ID"
   );
 }
 
@@ -26,8 +28,8 @@ export default async function handler(
 
     try {
       const response = await databases.createDocument(
-        process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!, // Replace with your database ID
-        process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID!, // Replace with your collection ID
+        databaseId, // Use the environment variable
+        collectionId, // Use the environment variable
         ID.unique(), // Document ID, use ID.unique() to auto-generate
         formData
       );
