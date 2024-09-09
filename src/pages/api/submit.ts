@@ -14,8 +14,8 @@ if (!projectId || !databaseId || !collectionId) {
 }
 
 client
-  .setEndpoint('https://cloud.appwrite.io/v1') // Make sure this is your correct Appwrite endpoint
-  .setProject(projectId as string); // Type assertion to ensure it's a string
+  .setEndpoint('https://cloud.appwrite.io/v1')
+  .setProject(projectId);
 
 const databases = new Databases(client);
 
@@ -28,9 +28,9 @@ export default async function handler(
 
     try {
       const response = await databases.createDocument(
-        databaseId, // Use the environment variable
-        collectionId, // Use the environment variable
-        ID.unique(), // Document ID, use ID.unique() to auto-generate
+        databaseId,
+        collectionId,
+        ID.unique(),
         formData
       );
       console.log("Document created:", response);
