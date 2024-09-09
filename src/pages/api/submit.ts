@@ -3,8 +3,9 @@ import { Client, Databases } from "appwrite";
 
 const client = new Client();
 client
-  .setEndpoint("https://cloud.appwrite.io/v1") // Your Appwrite endpoint
-  .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID as string); // Use environment variables
+  .setEndpoint('https://cloud.appwrite.io/v1') // Your Appwrite endpoint
+  .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID || 'default_project_id') // Use environment variables with a default value
+  .setKey(process.env.APPWRITE_API_KEY || 'default_api_key'); // Use environment variables with a default value
 
 const databases = new Databases(client);
 
