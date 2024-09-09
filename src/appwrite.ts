@@ -1,27 +1,12 @@
 import { Client, Databases, ID } from "appwrite";
 
 const client = new Client();
-
 client
-  .setEndpoint("https://cloud.appwrite.io/v1") // Replace with your Appwrite endpoint
-  .setProject("66d665a3001ba4f6f1b1"); // Replace with your Appwrite project ID
+  .setEndpoint('https://cloud.appwrite.io/v1') // Your Appwrite endpoint
+  .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID!); // Your project ID
 
-export const databases = new Databases(client);
+const databases = new Databases(client);
 
-export const createDocument = async (
-  databaseId: string,
-  collectionId: string,
-  data: Record<string, any>
-) => {
-  try {
-    return await databases.createDocument(
-      databaseId,
-      collectionId,
-      ID.unique(),
-      data,
-      ['read("any")'] // Adjust the permissions as needed
-    );
-  } catch (error) {
-    throw error;
-  }
+export const createDocument = async (databaseId: string, collectionId: string, data: any) => {
+  return await databases.createDocument(databaseId, collectionId, ID.unique(), data);
 };

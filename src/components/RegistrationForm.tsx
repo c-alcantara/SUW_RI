@@ -3,18 +3,14 @@ import { Label } from "../styles/ui/label";
 import { Input } from "../styles/ui/input";
 import { Button } from "../styles/ui/button";
 import { CheckIcon } from "@heroicons/react/24/solid";
-import { Databases } from "appwrite";
 import { createDocument } from "../appwrite";
 
 export default function RegistrationForm() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone: "",
-    affiliation: {
-      student: false,
-      professional: false,
-    },
+    phone: 0,
+    affiliation: "Participant",
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -24,30 +20,34 @@ export default function RegistrationForm() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      affiliation: { ...prev.affiliation, [name]: checked },
-    }));
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setFormData((prev) => ({ ...prev, phone: parseInt(value, 10) }));
+  };
+
+  const handleAffiliationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setFormData((prev) => ({ ...prev, affiliation: e.target.value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch("/api/submit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await createDocument(
+        process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
+        process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID!,
+        {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          affiliation: formData.affiliation,
+        }
+      );
 
-      if (response.ok) {
+      if (response) {
         setIsSubmitted(true);
-        console.log("Form submitted:", await response.json());
+        console.log("Form submitted:", response);
       } else {
-        console.error("Error submitting form:", await response.json());
+        console.error("Error submitting form:", response);
       }
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -98,37 +98,27 @@ export default function RegistrationForm() {
           <Input
             id="phone"
             name="phone"
-            type="tel"
+            type="number"
             value={formData.phone}
-            onChange={handleInputChange}
+            onChange={handlePhoneChange}
             required
             className="rounded"
           />
         </div>
         <div>
-          <Label className="font-bold">Affiliation</Label>
-          <div className="flex items-center space-x-4">
-            <label className="flex items-center">
-              <input
-                type="checkbox"
-                name="student"
-                checked={formData.affiliation.student}
-                onChange={handleCheckboxChange}
-                className="rounded"
-              />
-              <span className="ml-2">Student</span>
-            </label>
-            <label className="flex items-center">
-              <input
-                type="checkbox"
-                name="professional"
-                checked={formData.affiliation.professional}
-                onChange={handleCheckboxChange}
-                className="rounded"
-              />
-              <span className="ml-2">Professional</span>
-            </label>
-          </div>
+          <Label className="font-bold" htmlFor="affiliation">
+            Affiliation
+          </Label>
+          <select
+            id="affiliation"
+            name="affiliation"
+            value={formData.affiliation}
+            onChange={handleAffiliationChange}
+            className="rounded"
+          >
+            <option value="Participant">Participant</option>
+            <option value="Founder">Founder</option>
+          </select>
         </div>
       </div>
       <Button
