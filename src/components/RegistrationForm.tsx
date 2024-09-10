@@ -20,11 +20,7 @@ export default function RegistrationForm() {
   ) => {
     const { name, value } = e.target;
 
-    // Validate phone number to allow only digits
-    if (name === "phone" && !/^\d*$/.test(value)) {
-      return; // Ignore non-digit input
-    }
-
+  
     setFormData((prev) => ({
       ...prev,
       [name]: value, // Keep value as string for all fields
