@@ -8,7 +8,7 @@ export default function RegistrationForm() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone: "",
+    phone: 0,
     affiliation: "Participant",
   });
 
