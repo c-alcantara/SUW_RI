@@ -4,7 +4,7 @@ const Background = () => {
 
 
   return (
-    <div className=" fixed inset-0 w-full h-full overflow-hidden z-[-1]">
+    <div className=" grayscale fixed inset-0 w-full h-full overflow-hidden z-[-1]">
       <iframe
         width="110%"
         height="100%"

@@ -8,7 +8,7 @@ export default function RegistrationForm() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone: 0,
+    phone: "",
     affiliation: "Participant",
   });
 
@@ -49,16 +49,13 @@ export default function RegistrationForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-6 max-w-md mx-auto p-6 backdrop-blur-2xl border-2 border-white bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.7)] rounded-2xl"
+      className="space-y-6 max-w-md mx-auto p-6 backdrop-blur-2xl border-2 border-white bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.55)] rounded-2xl"
     >
-      <h2 className="text-2xl font-bold mb-0 p-0">Startup Week Rhode Island</h2>
-      <p className="mt-[-4px] mb-0">Friday September 20th - Friday September 27th</p>
-      <div className="space-y-4">
+      <h2 className="text-2xl font-bold mb-[-5px] p-0">Startup Week Rhode Island</h2>
+      <p className=" mb-0">September 20th - September 27th</p>
+      <div className="space-y-4"> {/* Ensure this div wraps all fields for consistent spacing */}
         {["name", "email", "phone"].map((field) => (
           <div key={field}>
-            <Label className="font-bold" htmlFor={field}>
-              {field.charAt(0).toUpperCase() + field.slice(1)}
-            </Label>
             <Input
               id={field}
               name={field}
@@ -66,20 +63,19 @@ export default function RegistrationForm() {
               value={formData[field as keyof typeof formData]}
               onChange={handleInputChange}
               required
-              className="rounded"
+              className="rounded-lg shadow-md h-10 pl-2"
+              placeholder={field.charAt(0).toUpperCase() + field.slice(1)} // Set placeholder to field title
             />
           </div>
         ))}
-        <div>
-          <Label className="font-bold" htmlFor="affiliation">
-            Affiliation
-          </Label>
+        <div> {/* Moved affiliation into the same spacing structure */}
+          <Label className="font-bold mr-2" htmlFor="affiliation">Affiliation:  </Label>
           <select
             id="affiliation"
             name="affiliation"
             value={formData.affiliation}
             onChange={handleInputChange}
-            className="rounded"
+            className="rounded-lg shadow-md h-10 pl-2 pr-1" // Added padding-left for consistency
           >
             <option value="Participant">Participant</option>
             <option value="Founder">Founder</option>
@@ -88,7 +84,7 @@ export default function RegistrationForm() {
       </div>
       <Button
         type="submit"
-        className={`w-full ${isSubmitted ? "bg-green-500" : "bg-black"}`}
+        className={`w-full ${isSubmitted ? "bg-green-500" : "text-white bg-black"} transition-colors duration-300`} // Added transition for smooth color change
       >
         {isSubmitted ? (
           <span className="flex items-center justify-center">
