@@ -18,8 +18,7 @@ export default async function handler(
         process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID as string,
         ID.unique(),
         req.body,
-        [`API_KEY_${process.env.NEXT_PRIVATE_APPWRITE_API_KEY}`]
-        
+        ["write"]
       );
       res.status(200).json({ success: true, data: response });
     } catch (error) {
