@@ -8,24 +8,24 @@ export default function RegistrationForm() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone: 0, // Change phone to be a number
+    phone: "", // Initialize phone as an empty string
     affiliation: "Participant",
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null); // State for error message
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
 
-    // Validate phone number to allow only digits
+    // Format phone number by removing non-digit characters
     if (name === "phone") {
-      const phoneValue = value.replace(/\D/g, ""); // Remove non-digit characters
+      const formattedPhone = value.replace(/\D/g, "");
       setFormData((prev) => ({
         ...prev,
-        phone: phoneValue ? parseInt(phoneValue, 10) : 0, // Convert to integer or set to 0 if empty
+        phone: formattedPhone,
       }));
     } else {
       setFormData((prev) => ({
@@ -37,12 +37,12 @@ export default function RegistrationForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setErrorMessage(null); // Reset error message on new submission
+    setErrorMessage(null);
 
     // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Basic email validation regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
-      setErrorMessage("Please enter a valid email address."); // Set error message for invalid email
+      setErrorMessage("Please enter a valid email address.");
       return;
     }
 
@@ -61,11 +61,11 @@ export default function RegistrationForm() {
         setIsSubmitted(true);
         console.log("Form submitted:", data);
       } else {
-        setErrorMessage(data.error); // Set error message
+        setErrorMessage(data.error);
         console.error("Error submitting form:", data.error);
       }
     } catch (error) {
-      setErrorMessage("An unexpected error occurred."); // Set generic error message
+      setErrorMessage("An unexpected error occurred.");
       console.error("Error submitting form:", error);
     }
   };
@@ -88,11 +88,7 @@ export default function RegistrationForm() {
               type={
                 field === "phone" ? "tel" : field === "email" ? "email" : "text"
               }
-              value={
-                field === "phone"
-                  ? formData.phone.toString()
-                  : formData[field as keyof typeof formData]
-              }
+              value={formData[field as keyof typeof formData]}
               onChange={handleInputChange}
               required
               className="rounded-lg shadow-md h-10 pl-2"
@@ -124,12 +120,12 @@ export default function RegistrationForm() {
             : errorMessage
             ? "bg-red-500"
             : "text-white bg-black"
-        } transition-colors duration-300 rounded-lg h-12`} // Change color based on submission status
+        } transition-colors duration-300 rounded-lg h-12`}
       >
         {isSubmitted
-          ? "Capture QR Code" // Change text on successful submission
+          ? "Capture QR Code"
           : errorMessage
-          ? errorMessage // Show error message if submission fails
+          ? errorMessage
           : "Register"}
       </Button>
     </form>
