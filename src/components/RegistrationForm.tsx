@@ -18,7 +18,7 @@ export default function RegistrationForm() {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: name === "phone" ? parseInt(value, 10) : value,
+      [name]: name === "phone" ? value : value, // Keep value as string for phone
     }));
   };
 
@@ -30,7 +30,10 @@ export default function RegistrationForm() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          phone: formData.phone.replace(/-/g, ''), // Remove dashes before submission
+        }),
       });
 
       const data = await response.json();
@@ -52,30 +55,30 @@ export default function RegistrationForm() {
       className="space-y-6 max-w-md mx-auto p-6 backdrop-blur-2xl border-2 border-white bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.55)] rounded-2xl"
     >
       <h2 className="text-2xl font-bold mb-[-5px] p-0">Startup Week Rhode Island</h2>
-      <p className=" mb-0">September 20th - September 27th</p>
-      <div className="space-y-4"> {/* Ensure this div wraps all fields for consistent spacing */}
+      <p className="mb-0">September 20th - September 27th</p>
+      <div className="space-y-4">
         {["name", "email", "phone"].map((field) => (
           <div key={field}>
             <Input
               id={field}
               name={field}
-              type={field === "phone" ? "number" : "text"}
+              type={field === "phone" ? "tel" : "text"} // Changed to "tel" for phone input
               value={formData[field as keyof typeof formData]}
               onChange={handleInputChange}
               required
               className="rounded-lg shadow-md h-10 pl-2"
-              placeholder={field.charAt(0).toUpperCase() + field.slice(1)} // Set placeholder to field title
+              placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
             />
           </div>
         ))}
-        <div> {/* Moved affiliation into the same spacing structure */}
-          <Label className="font-bold mr-2" htmlFor="affiliation">Affiliation:  </Label>
+        <div>
+          <Label className="font-bold mr-2" htmlFor="affiliation">Affiliation:</Label>
           <select
             id="affiliation"
             name="affiliation"
             value={formData.affiliation}
             onChange={handleInputChange}
-            className="rounded-lg shadow-md h-10 pl-2 pr-1" // Added padding-left for consistency
+            className="rounded-lg shadow-md h-10 pl-2 pr-1"
           >
             <option value="Participant">Participant</option>
             <option value="Founder">Founder</option>
@@ -84,7 +87,7 @@ export default function RegistrationForm() {
       </div>
       <Button
         type="submit"
-        className={`w-full ${isSubmitted ? "bg-green-500" : "text-white bg-black"} transition-colors duration-300`} // Added transition for smooth color change
+        className={`w-full ${isSubmitted ? "bg-green-500" : "text-white bg-black"} transition-colors duration-300 rounded-lg h-12`} // Increased height for better rounding
       >
         {isSubmitted ? (
           <span className="flex items-center justify-center">

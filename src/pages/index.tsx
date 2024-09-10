@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import RegistrationForm from "../components/RegistrationForm";
-import Background from "../components/Backgr";
+import Backgr from "../components/Backgr";
 
 const words = ["INNOVATORS", "BUILDING", "TODAY", "FOR", "THE", "WORLD", "OF", "TOMORROW"];
 
@@ -14,7 +14,7 @@ export default function Home() {
     const timer2 = setTimeout(() => {
       setShowForm(true);
       setShowBckg(false);
-    }, 4150);
+    }, 4100);
 
     return () => clearTimeout(timer2);
   }, []);
@@ -60,7 +60,7 @@ export default function Home() {
       <h1 className={`title mix-blend-difference ${fadeClass}`} style={{ whiteSpace: "nowrap" }}>
         <span>{words[currentWordIndex]}</span>
       </h1>
-      <Background />
+      <Backgr />
     </div>
   );
 }
