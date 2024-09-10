@@ -11,7 +11,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  console.log(`Received ${req.method} request`); // Log the request method
   if (req.method === "POST") {
     try {
       const response = await databases.createDocument(
@@ -28,6 +27,7 @@ export default async function handler(
       });
     }
   } else {
-    res.status(405).json({ success: false, error: "Method not allowed" });
+    res.setHeader("Allow", ["POST"]);
+    res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }

@@ -14,7 +14,9 @@ export default function RegistrationForm() {
 
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -22,23 +24,25 @@ export default function RegistrationForm() {
     }));
   };
 
+  // ... (previous code remains the same)
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch('./pages/api/submit', {
-        method: 'POST',
+      const response = await fetch("/api/submit", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           ...formData,
-          phone: formData.phone.replace(/-/g, ''), // Remove dashes before submission
+          phone: formData.phone.replace(/-/g, ""), // Remove dashes before submission
         }),
       });
 
       const data = await response.json();
 
-      if (data.success) {
+      if (response.ok) {
         setIsSubmitted(true);
         console.log("Form submitted:", data);
       } else {
@@ -49,12 +53,16 @@ export default function RegistrationForm() {
     }
   };
 
+  // ... (remaining code remains the same)
+
   return (
     <form
       onSubmit={handleSubmit}
       className="space-y-6 max-w-md mx-auto p-6 backdrop-blur-2xl border-2 border-white bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.55)] rounded-2xl"
     >
-      <h2 className="text-2xl font-bold mb-[-5px] p-0">Startup Week Rhode Island</h2>
+      <h2 className="text-2xl font-bold mb-[-5px] p-0">
+        Startup Week Rhode Island
+      </h2>
       <p className="mb-0">September 20th - September 27th</p>
       <div className="space-y-4">
         {["name", "email", "phone"].map((field) => (
@@ -72,7 +80,9 @@ export default function RegistrationForm() {
           </div>
         ))}
         <div>
-          <Label className="font-bold mr-2" htmlFor="affiliation">Affiliation:</Label>
+          <Label className="font-bold mr-2" htmlFor="affiliation">
+            Affiliation:
+          </Label>
           <select
             id="affiliation"
             name="affiliation"
@@ -87,7 +97,9 @@ export default function RegistrationForm() {
       </div>
       <Button
         type="submit"
-        className={`w-full ${isSubmitted ? "bg-green-500" : "text-white bg-black"} transition-colors duration-300 rounded-lg h-12`} // Increased height for better rounding
+        className={`w-full ${
+          isSubmitted ? "bg-green-500" : "text-white bg-black"
+        } transition-colors duration-300 rounded-lg h-12`} // Increased height for better rounding
       >
         {isSubmitted ? (
           <span className="flex items-center justify-center">
