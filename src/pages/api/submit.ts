@@ -11,6 +11,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  console.log(`Received ${req.method} request`); // Log the request method
   if (req.method === "POST") {
     try {
       const response = await databases.createDocument(
