@@ -19,15 +19,28 @@ export default function RegistrationForm() {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
+
+    // Validate phone number to allow only digits
+    if (name === "phone" && !/^\d*$/.test(value)) {
+      return; // Ignore non-digit input
+    }
+
     setFormData((prev) => ({
       ...prev,
-      [name]: name === "phone" ? value : value, // Keep value as string for phone
+      [name]: value, // Keep value as string for phone
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage(null); // Reset error message on new submission
+
+    // Validate email format
+    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      setErrorMessage("Please enter a valid email address."); // Set error message for invalid email
+      return;
+    }
+
     try {
       const response = await fetch("/api/submit", {
         method: "POST",
