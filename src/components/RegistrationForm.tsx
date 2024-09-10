@@ -35,8 +35,9 @@ export default function RegistrationForm() {
     e.preventDefault();
     setErrorMessage(null); // Reset error message on new submission
 
-    // Validate email format
-    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+    // Improved email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Basic email validation regex
+    if (!emailRegex.test(formData.email)) {
       setErrorMessage("Please enter a valid email address."); // Set error message for invalid email
       return;
     }
@@ -83,7 +84,7 @@ export default function RegistrationForm() {
             <Input
               id={field}
               name={field}
-              type={field === "number" ? "tel" : "text"} // Changed to "tel" for phone input
+              type={field === "phone" ? "tel" : "text"} // Changed to "tel" for phone input
               value={formData[field as keyof typeof formData]}
               onChange={handleInputChange}
               required
