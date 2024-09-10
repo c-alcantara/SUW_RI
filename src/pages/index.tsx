@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import RegistrationForm from "../components/RegistrationForm";
 import Backgr from "../components/Backgr";
 
-const words = ["INNOVATORS", "BUILDING", "TODAY", "FOR", "THE", "WORLD", "OF", "TOMORROW"];
+const words = ["INNOVATORS", "BUILDING", "TODAY", "FOR", "THE", "VISION", "OF", "TOMORROW"];
 
 export default function Home() {
   const [showForm, setShowForm] = useState(false);
