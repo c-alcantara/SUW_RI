@@ -8,7 +8,7 @@ export default function RegistrationForm() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone: 0,
+    phone: "", // Change phone to be a string
     affiliation: "Participant",
   });
 
@@ -20,10 +20,14 @@ export default function RegistrationForm() {
   ) => {
     const { name, value } = e.target;
 
-  
+    // Validate phone number to allow only digits
+    if (name === "phone" && !/^\d*$/.test(value)) {
+      return; // Ignore non-digit input
+    }
+
     setFormData((prev) => ({
       ...prev,
-      [name]: value, // Keep value as string for all fields
+      [name]: value, // Keep value as string for phone
     }));
   };
 
@@ -38,13 +42,6 @@ export default function RegistrationForm() {
       return;
     }
 
-    // Convert phone number to an integer
-    const phoneNumber = parseInt(formData.phone, 10);
-    if (isNaN(phoneNumber)) {
-      setErrorMessage("Please enter a valid phone number."); // Set error message for invalid phone number
-      return;
-    }
-
     try {
       const response = await fetch("/api/submit", {
         method: "POST",
@@ -53,7 +50,7 @@ export default function RegistrationForm() {
         },
         body: JSON.stringify({
           ...formData,
-          phone: phoneNumber, // Submit phone number as an integer
+          phone: formData.phone.replace(/-/g, ""), // Remove dashes before submission
         }),
       });
 
