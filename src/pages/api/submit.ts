@@ -20,7 +20,7 @@ export default async function handler(
         process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID as string,
         ID.unique(),
         req.body,
-        ["write:*"]
+  
       );
       res.status(200).json({ success: true, data: response });
     } catch (error) {
