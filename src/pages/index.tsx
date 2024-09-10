@@ -14,13 +14,13 @@ export default function Home() {
     const timer2 = setTimeout(() => {
       setShowForm(true);
       setShowBckg(false);
-    }, 4100);
+    }, 3500);
 
     return () => clearTimeout(timer2);
   }, []);
 
   useEffect(() => {
-    const duration = currentWordIndex === 0 ? 550 : 300; // 650 seconds for the first word, 4 seconds for others
+    const duration = currentWordIndex === 0 ? 550 : 250; 
 
     const changeWord = () => {
       setFadeClass("fade-out-word");
