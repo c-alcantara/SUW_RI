@@ -13,6 +13,7 @@ export default function RegistrationForm() {
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null); // State for error message
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -24,10 +25,9 @@ export default function RegistrationForm() {
     }));
   };
 
-  // ... (previous code remains the same)
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMessage(null); // Reset error message on new submission
     try {
       const response = await fetch("/api/submit", {
         method: "POST",
@@ -46,14 +46,14 @@ export default function RegistrationForm() {
         setIsSubmitted(true);
         console.log("Form submitted:", data);
       } else {
+        setErrorMessage(data.error); // Set error message
         console.error("Error submitting form:", data.error);
       }
     } catch (error) {
+      setErrorMessage("An unexpected error occurred."); // Set generic error message
       console.error("Error submitting form:", error);
     }
   };
-
-  // ... (remaining code remains the same)
 
   return (
     <form
@@ -98,14 +98,13 @@ export default function RegistrationForm() {
       <Button
         type="submit"
         className={`w-full ${
-          isSubmitted ? "bg-green-500" : "text-white bg-black"
-        } transition-colors duration-300 rounded-lg h-12`} // Increased height for better rounding
+          isSubmitted ? "bg-yellow-500" : errorMessage ? "bg-red-500" : "text-white bg-black"
+        } transition-colors duration-300 rounded-lg h-12`} // Change color based on submission status
       >
         {isSubmitted ? (
-          <span className="flex items-center justify-center">
-            <CheckIcon className="h-5 w-5 mr-2" />
-            Submitted
-          </span>
+          "Capture QR Code" // Change text on successful submission
+        ) : errorMessage ? (
+          errorMessage // Show error message if submission fails
         ) : (
           "Register"
         )}
