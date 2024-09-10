@@ -87,7 +87,7 @@ export default function RegistrationForm() {
             <Input
               id={field}
               name={field}
-              type={field === "phone" ? "tel" : "text"} // Set type to "tel" for phone input
+              type={field === "phone" ? "text" : "email"} // Set type to "text" for phone input
               value={formData[field as keyof typeof formData]}
               onChange={handleInputChange}
               required
