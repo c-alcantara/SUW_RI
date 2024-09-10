@@ -1,6 +1,6 @@
 "use client"
 
-const Background = () => {
+const Backgr = () => {
 
 
   return (
@@ -14,7 +14,7 @@ const Background = () => {
   );
 }
 
-export default Background;
+export default Backgr;
 
 
 

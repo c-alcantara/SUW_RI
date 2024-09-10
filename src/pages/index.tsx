@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import RegistrationForm from "../components/RegistrationForm";
-import Background from "../components/Background";
+import Background from "../components/Backgr";
 
 const words = ["INNOVATORS", "BUILDING", "TODAY", "FOR", "THE", "WORLD", "OF", "TOMORROW"];
 
