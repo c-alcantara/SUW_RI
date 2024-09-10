@@ -2,9 +2,8 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { Client, Databases, ID } from "appwrite";
 
 const client = new Client()
-  .setEndpoint("https://cloud.appwrite.io/v1")
-  .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID as string)
-  .setKey(process.env.NEXT_PRIVATE_APPWRITE_API_KEY as string);
+  .setEndpoint('https://cloud.appwrite.io/v1')
+  .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID as string);
 
 const databases = new Databases(client);
 
@@ -18,7 +17,9 @@ export default async function handler(
         process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
         process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID as string,
         ID.unique(),
-        req.body
+        req.body,
+        [`API_KEY_${process.env.NEXT_PRIVATE_APPWRITE_API_KEY}`]
+        
       );
       res.status(200).json({ success: true, data: response });
     } catch (error) {
