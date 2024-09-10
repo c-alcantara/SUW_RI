@@ -8,7 +8,7 @@ export default function RegistrationForm() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone: 0,
+    phone: "",
     affiliation: "Participant",
   });
 
@@ -35,10 +35,17 @@ export default function RegistrationForm() {
     e.preventDefault();
     setErrorMessage(null); // Reset error message on new submission
 
-    // Improved email format validation
+    // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Basic email validation regex
     if (!emailRegex.test(formData.email)) {
       setErrorMessage("Please enter a valid email address."); // Set error message for invalid email
+      return;
+    }
+
+    // Convert phone number to an integer
+    const phoneNumber = parseInt(formData.phone, 10);
+    if (isNaN(phoneNumber)) {
+      setErrorMessage("Please enter a valid phone number."); // Set error message for invalid phone number
       return;
     }
 
@@ -50,7 +57,7 @@ export default function RegistrationForm() {
         },
         body: JSON.stringify({
           ...formData,
-          phone: formData.phone.replace(/-/g, ""), // Remove dashes before submission
+          phone: phoneNumber, // Submit phone number as an integer
         }),
       });
 
@@ -84,7 +91,7 @@ export default function RegistrationForm() {
             <Input
               id={field}
               name={field}
-              type={field === "email" ? "email" : "text"} // Set type to "email" for email input
+              type={field === "phone" ? "tel" : "email"} // Set type to "tel" for phone input
               value={formData[field as keyof typeof formData]}
               onChange={handleInputChange}
               required
