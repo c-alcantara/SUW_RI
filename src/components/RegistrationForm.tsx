@@ -27,7 +27,7 @@ export default function RegistrationForm() {
 
     setFormData((prev) => ({
       ...prev,
-      [name]: value, // Keep value as string for phone
+      [name]: value, // Keep value as string for all fields
     }));
   };
 
@@ -91,7 +91,7 @@ export default function RegistrationForm() {
             <Input
               id={field}
               name={field}
-              type={field === "phone" ? "tel" : "email"} // Set type to "tel" for phone input
+              type={field === "phone" ? "tel" : "text"} // Set type to "tel" for phone input
               value={formData[field as keyof typeof formData]}
               onChange={handleInputChange}
               required
