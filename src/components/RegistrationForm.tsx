@@ -78,12 +78,12 @@ export default function RegistrationForm() {
       </h2>
       <p className="mb-0">September 20th - September 27th</p>
       <div className="space-y-4">
-        {["name", "email", "phone"].map((field) => (
+        {["name", "email", "number"].map((field) => (
           <div key={field}>
             <Input
               id={field}
               name={field}
-              type={field === "phone" ? "tel" : "text"} // Changed to "tel" for phone input
+              type={field === "number" ? "tel" : "text"} // Changed to "tel" for phone input
               value={formData[field as keyof typeof formData]}
               onChange={handleInputChange}
               required
