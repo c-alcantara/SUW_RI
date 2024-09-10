@@ -1,11 +1,13 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { Client, Databases, ID } from "appwrite";
 
-const client = new Client()
+const client = new Client();
+  client
   .setEndpoint('https://cloud.appwrite.io/v1')
   .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID as string);
 
 const databases = new Databases(client);
+
 
 export default async function handler(
   req: NextApiRequest,
@@ -32,3 +34,6 @@ export default async function handler(
     res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
+
+
+
