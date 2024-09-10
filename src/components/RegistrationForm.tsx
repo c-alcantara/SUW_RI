@@ -8,7 +8,7 @@ export default function RegistrationForm() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone: "", // Change phone to be a string
+    phone: 0, // Change phone to be a number
     affiliation: "Participant",
   });
 
@@ -21,14 +21,18 @@ export default function RegistrationForm() {
     const { name, value } = e.target;
 
     // Validate phone number to allow only digits
-    if (name === "phone" && !/^\d*$/.test(value)) {
-      return; // Ignore non-digit input
+    if (name === "phone") {
+      const phoneValue = value.replace(/\D/g, ""); // Remove non-digit characters
+      setFormData((prev) => ({
+        ...prev,
+        phone: phoneValue ? parseInt(phoneValue, 10) : 0, // Convert to integer or set to 0 if empty
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
     }
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value, // Keep value as string for phone
-    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -48,10 +52,7 @@ export default function RegistrationForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          ...formData,
-          phone: formData.phone.replace(/-/g, ""), // Remove dashes before submission
-        }),
+        body: JSON.stringify(formData),
       });
 
       const data = await response.json();
@@ -84,8 +85,14 @@ export default function RegistrationForm() {
             <Input
               id={field}
               name={field}
-              type={field === "phone" ? "text" : "email"} // Set type to "text" for phone input
-              value={formData[field as keyof typeof formData]}
+              type={
+                field === "phone" ? "tel" : field === "email" ? "email" : "text"
+              }
+              value={
+                field === "phone"
+                  ? formData.phone.toString()
+                  : formData[field as keyof typeof formData]
+              }
               onChange={handleInputChange}
               required
               className="rounded-lg shadow-md h-10 pl-2"
@@ -112,16 +119,18 @@ export default function RegistrationForm() {
       <Button
         type="submit"
         className={`w-full ${
-          isSubmitted ? "bg-yellow-500" : errorMessage ? "bg-red-500" : "text-white bg-black"
+          isSubmitted
+            ? "bg-yellow-500"
+            : errorMessage
+            ? "bg-red-500"
+            : "text-white bg-black"
         } transition-colors duration-300 rounded-lg h-12`} // Change color based on submission status
       >
-        {isSubmitted ? (
-          "Capture QR Code" // Change text on successful submission
-        ) : errorMessage ? (
-          errorMessage // Show error message if submission fails
-        ) : (
-          "Register"
-        )}
+        {isSubmitted
+          ? "Capture QR Code" // Change text on successful submission
+          : errorMessage
+          ? errorMessage // Show error message if submission fails
+          : "Register"}
       </Button>
     </form>
   );
