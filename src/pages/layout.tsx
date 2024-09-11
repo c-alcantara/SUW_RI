@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import React from 'react'; // Add this line if necessary
 import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 

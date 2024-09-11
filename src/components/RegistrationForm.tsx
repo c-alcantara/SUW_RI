@@ -3,17 +3,21 @@ import { Label } from "../styles/ui/label";
 import { Input } from "../styles/ui/input";
 import { Button } from "../styles/ui/button";
 import { CheckIcon } from "@heroicons/react/24/solid";
+ import QrReader from "react-qr-reader";
+
 
 export default function RegistrationForm() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone: "", // Initialize phone as an empty string
+    phone: "",
     affiliation: "Participant",
+    event: "",
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isScanning, setIsScanning] = useState(false); // State to control QR scanning
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -70,6 +74,20 @@ export default function RegistrationForm() {
     }
   };
 
+  const handleScan = (data: string | null) => {
+    if (data) {
+      setFormData((prev) => ({
+        ...prev,
+        event: data, // Set the scanned QR code data to the event field
+      }));
+      setIsScanning(false); // Stop scanning after capturing the QR code
+    }
+  };
+
+  const handleError = (err: any) => {
+    console.error(err);
+  };
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -85,9 +103,7 @@ export default function RegistrationForm() {
             <Input
               id={field}
               name={field}
-              type={
-                field === "phone" ? "tel" : field === "email" ? "email" : "text"
-              }
+              type={field === "email" ? "email" : "text"}
               value={formData[field as keyof typeof formData]}
               onChange={handleInputChange}
               required
@@ -113,20 +129,35 @@ export default function RegistrationForm() {
         </div>
       </div>
       <Button
+        type="button" // Change to button to handle scanning
+        onClick={() => setIsScanning(true)} // Start scanning when clicked
+        className="w-full bg-blue-500 text-white rounded-lg h-12"
+      >
+        Capture QR Code
+      </Button>
+      {isScanning && (
+        <div className="mt-4">
+          <QrReader
+            delay={300}
+            onError={handleError}
+            onScan={handleScan}
+            style={{ width: "100%" }}
+          />
+        </div>
+      )}
+      <Button
         type="submit"
         className={`w-full ${
-          isSubmitted
-            ? "bg-yellow-500"
-            : errorMessage
-            ? "bg-red-500"
-            : "text-white bg-black"
+          isSubmitted ? "bg-yellow-500" : errorMessage ? "bg-red-500" : "text-white bg-black"
         } transition-colors duration-300 rounded-lg h-12`}
       >
-        {isSubmitted
-          ? "Capture QR Code"
-          : errorMessage
-          ? errorMessage
-          : "Register"}
+        {isSubmitted ? (
+          "Capture QR Code" // Change text on successful submission
+        ) : errorMessage ? (
+          errorMessage // Show error message if submission fails
+        ) : (
+          "Register"
+        )}
       </Button>
     </form>
   );
