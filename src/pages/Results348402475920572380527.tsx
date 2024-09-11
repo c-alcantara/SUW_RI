@@ -1,6 +1,10 @@
+import { BrowserRouter as Router } from "react-router-dom";
+import RegistrationForm from "../components/RegistrationForm";
+
 import { useEffect, useState } from "react";
-import { Client, Databases } from "appwrite";
+
 import AltBackground from "@/components/AltBackground";
+import { Client, Databases } from "appwrite"; // Updated import
 
 const client = new Client();
 client
@@ -9,27 +13,17 @@ client
 
 const databases = new Databases(client);
 
-interface sortedData {
-  name: string;
-  email: string;
-  phone: number;
-  eventCount: number;
-  events: string[];
-  displayName: string;
-  id: number;
-}
-
 export default function Results348402475920572380527() {
   const [showBckg, setShowBckg] = useState(true);
-  const [data, setData] = useState([]);
-  const [expandedRow, setExpandedRow] = useState(null);
+  const [data, setData] = useState<any[]>([]); // Use 'any' or define a specific type
+  const [eventSummary, setEventSummary] = useState<Record<string, number>>({});
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowBckg(false);
-    }, 1300);
+    }, 1100);
 
-    return () => clearTimeout(timer);
+    return () => clearTimeout(timer); // Cleanup timer on unmount
   }, []);
 
   useEffect(() => {
@@ -42,44 +36,56 @@ export default function Results348402475920572380527() {
         const uniqueEntries = new Map();
 
         response.documents.forEach((item) => {
-          const key = `${item.name}-${item.email}-${item.phone}`;
+          const key = `${item.name}-${item.email}-${item.phone}`; // Unique key for each entry
           if (!uniqueEntries.has(key)) {
             uniqueEntries.set(key, {
-              name: item.name,
-              email: item.email,
-              phone: item.phone,
-              eventCount: 1,
-              events: [item.event],
+              name: item.name, // Preserve name
+              email: item.email, // Preserve email
+              phone: item.phone, // Preserve phone
+              eventCount: 1, // Start count at 1 for the first occurrence
             });
           } else {
-            const entry = uniqueEntries.get(key);
-            entry.eventCount += 1;
-            if (!entry.events.includes(item.event)) {
-              entry.events.push(item.event);
-            }
+            uniqueEntries.get(key).eventCount += 1; // Increment event count for subsequent occurrences
           }
         });
 
         const sortedData = Array.from(uniqueEntries.values())
           .map((entry) => ({
             ...entry,
+            event: entry.eventCount, // Set event to the count of unique events
             displayName: entry.name,
-            id: entry.phone ? entry.phone.slice(-4) : "",
+            id: entry.phone ? entry.phone.slice(-4) : "", // Add last 4 digits of phone as ID
           }))
-          .sort((a, b) => b.eventCount - a.eventCount);
+          .sort((a, b) => b.event - a.event); // Sort by event count in descending order
 
-        setData(sortedData);
+        setData(sortedData); // Set sorted data
+
+        // Count unique users per event
+        const eventCount = new Map<string, Set<string>>();
+        response.documents.forEach((item) => {
+          const eventName = item.event;
+          const userName = item.name;
+          if (!eventCount.has(eventName)) {
+            eventCount.set(eventName, new Set());
+          }
+          eventCount.get(eventName)!.add(userName);
+        });
+
+        // Prepare summary data
+        const summary = Object.fromEntries(
+          Array.from(eventCount.entries()).map(([event, users]) => [
+            event,
+            users.size,
+          ])
+        );
+        setEventSummary(summary);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
-    fetchData();
+    fetchData(); // Call the fetchData function to resolve the error
   }, []);
-
-  const toggleExpandRow = (index) => {
-    setExpandedRow(expandedRow === index ? null : index);
-  };
 
   return (
     <div className="container mx-auto py-10 h-screen flex flex-col items-center justify-center relative">
@@ -89,44 +95,57 @@ export default function Results348402475920572380527() {
         <table className="min-w-full bg-transparent">
           <thead>
             <tr>
-              <th className="border-black px-4 py-2">Rank</th>
+              <th className="border-black px-4 py-2">Rank</th>{" "}
               <th className="border-black px-4 py-2">ID</th>
+              {/* New Rank column */}
               <th className="border-black px-4 py-2">Name</th>
               <th className="border-black px-4 py-2">Events</th>
             </tr>
           </thead>
           <tbody>
-            {data.map((item, index) => (
-              <>
-                <tr key={item.id}>
-                  <td className="border-black px-4 py-2">{index + 1}</td>
+            {data.map(
+              (
+                item,
+                index // Use index for rank
+              ) => (
+                <tr key={item.$id}>
+                  <td className="border-black px-4 py-2">{index + 1}</td>{" "}
                   <td className="border-black px-4 py-2">{item.id}</td>
+                  {/* Display rank */}
                   <td className="border-black px-4 py-2">{item.displayName}</td>
-                  <td className="border-black px-4 py-2">
-                    <span
-                      className="cursor-pointer text-blue-600 underline"
-                      onClick={() => toggleExpandRow(index)}
-                    >
-                      {item.eventCount}
-                    </span>
-                  </td>
+                  <td className="border-black px-4 py-2">{item.event}</td>
                 </tr>
-                {expandedRow === index && (
-                  <tr>
-                    <td colSpan="4" className="border-black px-4 py-2 text-black">
-                      <ul>
-                        {item.events.map((event, eventIndex) => (
-                          <li key={eventIndex}>{event}</li>
-                        ))}
-                      </ul>
-                    </td>
-                  </tr>
-                )}
-              </>
-            ))}
+              )
+            )}
           </tbody>
         </table>
       </div>
+      {/* <div className="relative z-10 bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.7)] rounded-2xl shadow-lg p-4 max-w-md ">
+        <table className="min-w-full bg-transparent">
+          <thead>
+            <tr>
+              <th
+                className="border-black px-4 py-2 text-2xl font-bold"
+                colSpan={2}
+              >
+                Top Events
+              </th>
+            </tr>
+            <tr>
+              <th className="border-black px-4 py-2">Event</th>
+              <th className="border-black px-4 py-2">Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.entries(eventSummary).map(([event, count]) => (
+              <tr key={event}>
+                <td className="border-black px-4 py-2">{event}</td>
+                <td className="border-black px-4 py-2">{count}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div> */}
       <AltBackground />
     </div>
   );
