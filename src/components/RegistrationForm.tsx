@@ -39,7 +39,7 @@ export default function RegistrationForm() {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleCapture = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage(null);
 
@@ -64,6 +64,7 @@ export default function RegistrationForm() {
       if (response.ok) {
         setIsSubmitted(true);
         console.log("Form submitted:", data);
+        setIsScanning(true); // Start scanning after successful submission
       } else {
         setErrorMessage(data.error);
         console.error("Error submitting form:", data.error);
@@ -90,7 +91,7 @@ export default function RegistrationForm() {
 
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={handleCapture}
       className="space-y-6 max-w-md mx-auto p-6 backdrop-blur-2xl border-2 border-white bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.55)] rounded-2xl"
     >
       <h2 className="text-2xl font-bold mb-[-5px] p-0">
@@ -129,19 +130,12 @@ export default function RegistrationForm() {
         </div>
       </div>
       <Button
-        type="button" // Keep as button to handle both actions
-        onClick={async (e) => {
-          if (isSubmitted) {
-            setIsScanning(true); // Start scanning if already submitted
-          } else {
-            handleSubmit(e); // Pass the event object to handleSubmit
-          }
-        }}
+        type="submit"
         className={`w-full ${
-          isSubmitted ? "bg-yellow-500" : errorMessage ? "bg-red-500" : "text-white bg-black"
+          isScanning ? "bg-yellow-500" : errorMessage ? "bg-red-500" : "text-white bg-black"
         } transition-colors duration-300 rounded-lg h-12`}
       >
-        {isSubmitted ? "Scan QR Code" : errorMessage ? errorMessage : "Capture QR Code"}
+        {isScanning ? "Scanning..." : isSubmitted ? "Scan QR Code" : errorMessage ? errorMessage : "Capture QR Code"}
       </Button>
       {isScanning && (
         <div className="mt-4">
@@ -153,20 +147,6 @@ export default function RegistrationForm() {
           />
         </div>
       )}
-      <Button
-        type="submit"
-        className={`w-full ${
-          isSubmitted ? "bg-yellow-500" : errorMessage ? "bg-red-500" : "text-white bg-black"
-        } transition-colors duration-300 rounded-lg h-12`}
-      >
-        {isSubmitted ? (
-          "Capture QR Code" // Change text on successful submission
-        ) : errorMessage ? (
-          errorMessage // Show error message if submission fails
-        ) : (
-          "Register"
-        )}
-      </Button>
     </form>
   );
 }
