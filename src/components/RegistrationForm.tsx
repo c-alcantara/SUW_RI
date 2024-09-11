@@ -71,7 +71,7 @@ export default function RegistrationForm() {
               value={formData[field as keyof typeof formData]}
               onChange={handleInputChange}
               required
-              className="rounded-lg shadow-md h-10 pl-2"
+              className="rounded-lg shadow-md h-10 pl-2 text-base" // Set font size to 16px
               placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
             />
           </div>
@@ -83,7 +83,7 @@ export default function RegistrationForm() {
             name="affiliation"
             value={formData.affiliation}
             onChange={handleInputChange}
-            className="rounded-lg shadow-md h-10 pl-2 pr-1"
+            className="rounded-lg shadow-md h-10 pl-2 pr-1 text-base" // Set font size to 16px
           >
             {["Optional", "Participant", "Founder"].map((option) => (
               <option key={option} value={option}>{option}</option>
