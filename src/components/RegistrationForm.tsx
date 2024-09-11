@@ -132,13 +132,23 @@ export default function RegistrationForm() {
       <Button
         type="submit"
         className={`w-full ${
-          isScanning ? "bg-yellow-500" : errorMessage ? "bg-red-500" : "text-white bg-black"
+          isScanning
+            ? "bg-yellow-500"
+            : errorMessage
+            ? "bg-red-500"
+            : "text-white bg-black"
         } transition-colors duration-300 rounded-lg h-12`}
       >
-        {isScanning ? "Scanning..." : isSubmitted ? "Scan QR Code" : errorMessage ? errorMessage : "Capture QR Code"}
+        {isScanning
+          ? "Scanning..."
+          : isSubmitted
+          ? "Scan QR Code"
+          : errorMessage
+          ? errorMessage
+          : "Capture QR Code"}
       </Button>
       {isScanning && (
-        <div className="mt-4">
+        <div className="mt-4 rounded-lg overflow-hidden">
           <QrReader
             delay={300}
             onError={handleError}
