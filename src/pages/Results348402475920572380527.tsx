@@ -4,7 +4,7 @@ import RegistrationForm from '../components/RegistrationForm';
 import { useEffect, useState } from "react";
 import Backgr from "../components/Backgr";
 import Backgrz from "../components/Backgr";
-import { Client, Databases } from 'appwrite';
+import { Client, Databases } from 'appwrite'; // Updated import
 
 const client = new Client();
 client.setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!).setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID!);
@@ -13,7 +13,7 @@ const databases = new Databases(client);
 
 export default function Results348402475920572380527() {
   const [showBckg, setShowBckg] = useState(true);
-  const [data, setData] = useState<Document[]>([]); // Specify Document[] type
+  const [data, setData] = useState<any[]>([]); // Use 'any' or define a specific type
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -27,7 +27,7 @@ export default function Results348402475920572380527() {
     const fetchData = async () => {
       try {
         const response = await databases.listDocuments(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!, process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID!);
-        setData(response.documents); // No type error now
+        setData(response.documents); // This should now work without type errors
       } catch (error) {
         console.error('Error fetching data:', error);
       }
