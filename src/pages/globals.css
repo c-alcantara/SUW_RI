@@ -87,7 +87,7 @@ body {
 }
 
 .background {
-  animation: skew 6s ease-in forwards .5s;
+  animation: skew 1s .3s ease-in-out forwards ;
 
   width: 100vw;
   height: 100vh;
@@ -107,10 +107,12 @@ body {
   from {
 
   }
-  50% {
+  100% {
     /* transform: skew(360deg); */
     background-size: 100% 100%;
-    filter: blur(100px);
+    filter: opacity(0);
+  
+
   }
 
 }
@@ -139,10 +141,7 @@ html {
   animation: fadeIn .5s ; /* Fade in animation */
 }
 
-.blur-effect {
-  filter: blur(5px); /* Initial blur effect */
-  animation: blurOut 1s forwards; /* Blur out animation */
-}
+
 
 @keyframes fadeOut {
   to {
@@ -155,7 +154,7 @@ html {
 @keyframes fadeIn {
   from {
     filter: blur(50px); /* Remove blur */
-    scale: .75;
+    scale: .8;
     opacity: 0;
   }
   to {
@@ -169,38 +168,7 @@ html {
 .fade-out {
    filter: blur(0px); /* Remove blur */
  opacity: 100;
-  animation: fadeOut 1s forwards 5.1s; /* Fade in animation */
+  animation: fadeOut 1s forwards 2s; /* Fade in animation */
 
 }
 
-@keyframes fadeOutWord {
-  from {
-    opacity: 1;
-
-  }
-  to {
-    opacity: 0;
-
-  }
-}
-
-@keyframes fadeInWord {
-  from {
-    opacity: 0;
-
-
-  }
-  to {
-    opacity: 1;
-
-
-  }
-}
-
-.fade-out-word {
-  animation: fadeOutWord 0.4s forwards;
-}
-
-.fade-in-word {
-  animation: fadeInWord 0.4s forwards;
-}

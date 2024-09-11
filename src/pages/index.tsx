@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import RegistrationForm from "../components/RegistrationForm";
 import Backgr from "../components/Backgr";
 
@@ -9,40 +9,11 @@ export default function Home() {
   const [showbckg, setShowBckg] = useState(true);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [fadeClass, setFadeClass] = useState("fade-in-word");
-
-  useEffect(() => {
     const timer2 = setTimeout(() => {
       setShowForm(true);
       setShowBckg(false);
-    }, 3890);
-
-    return () => clearTimeout(timer2);
-  }, []);
-
-  useEffect(() => {
-    const duration = currentWordIndex === 0 ? 450 : 250; 
-
-    const changeWord = () => {
-      setFadeClass("fade-out-word");
-      setTimeout(() => {
-        if (currentWordIndex <= words.length - 1) {
-          setCurrentWordIndex((prevIndex) => prevIndex + 1);
-        } else {
-          // If it's the last word, do not change the index
-          setFadeClass("fade-in-word"); // Just fade in the last word
-          return; // Exit to prevent further changes
-        }
-        setFadeClass("fade-in-word");
-      }, 200);
-    };
-
-    const timer = setTimeout(() => {
-      changeWord();
-    }, duration); // Use the calculated duration
-
-    return () => clearTimeout(timer);
-  }, [currentWordIndex]);
-
+    }, 1300);
+  
   return (
     <div className="container mx-auto py-10 h-screen flex items-center justify-center relative">
       {showbckg && (
@@ -57,9 +28,7 @@ export default function Home() {
           </div>
         )}
       </div>
-      <h1 className={`title mix-blend-difference ${fadeClass}`} style={{ whiteSpace: "nowrap" }}>
-        <span>{words[currentWordIndex]}</span>
-      </h1>
+
       <Backgr />
     </div>
   );
