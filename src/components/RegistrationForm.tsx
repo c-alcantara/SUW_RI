@@ -57,7 +57,7 @@ export default function RegistrationForm() {
     }
   };
 
-  const isAvailable = new Date("2024-09-28") <= new Date(); // Check if the date is past September 28, 2024
+  const isAvailable = new Date("2024-09-11") <= new Date(); // Check if the date is past September 28, 2024
 
 
   return (
@@ -122,7 +122,7 @@ export default function RegistrationForm() {
       <Button
         type="button"
         className={`w-full border-2 ${isAvailable ? 'border-gray-400 text-gray-400' : 'border-black text-black cursor-not-allowed'} bg-transparent rounded-lg h-10 mt-2 transition-colors duration-300`} // Updated styles to be less gray
-        onClick={() => isAvailable && (window.location.href = "/Results")} // Redirect to Results.tsx page only if available
+        onClick={() => isAvailable && (window.location.href = "/Results348402475920572380527")} // Redirect to Results.tsx page only if available
         disabled={!isAvailable} // Disable button if not available
       >
         Contest Results
