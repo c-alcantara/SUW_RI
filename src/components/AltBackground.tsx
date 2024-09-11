@@ -1,6 +1,6 @@
 "use client"
 
-const Backgrz = () => {
+const AltBackground = () => {
   //Noise & Texture plugin developed byhttps://x.com/intent/follow?screen_name=rogie
   return (
     <div className="invert fixed inset-0 w-full h-full overflow-hidden z-[-1]">
@@ -13,6 +13,6 @@ const Backgrz = () => {
   );
 }
 
-export default Backgrz;
+export default AltBackground;
 
 

@@ -3,7 +3,7 @@ import RegistrationForm from '../components/RegistrationForm';
 
 import { useEffect, useState } from "react";
 import Backgr from "../components/Backgr";
-import Backgrz from "../components/Backgr";
+import AltBackground from '@/components/AltBackground';
 import { Client, Databases } from 'appwrite'; // Updated import
 
 const client = new Client();
@@ -72,7 +72,7 @@ export default function Results348402475920572380527() {
           </tbody>
         </table>
       </div>
-      <Backgrz />
+      <AltBackground />
     </div>
   );
 }
