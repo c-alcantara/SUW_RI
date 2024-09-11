@@ -16,6 +16,7 @@ const databases = new Databases(client);
 export default function Results348402475920572380527() {
   const [showBckg, setShowBckg] = useState(true);
   const [data, setData] = useState<any[]>([]); // Use 'any' or define a specific type
+  const [eventSummary, setEventSummary] = useState<Record<string, number>>({});
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -58,6 +59,26 @@ export default function Results348402475920572380527() {
           .sort((a, b) => b.event - a.event); // Sort by event count in descending order
 
         setData(sortedData); // Set sorted data
+
+        // Count unique users per event
+        const eventCount = new Map<string, Set<string>>();
+        response.documents.forEach((item) => {
+          const eventName = item.event;
+          const userName = item.name;
+          if (!eventCount.has(eventName)) {
+            eventCount.set(eventName, new Set());
+          }
+          eventCount.get(eventName)!.add(userName);
+        });
+
+        // Prepare summary data
+        const summary = Object.fromEntries(
+          Array.from(eventCount.entries()).map(([event, users]) => [
+            event,
+            users.size,
+          ])
+        );
+        setEventSummary(summary);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -112,22 +133,16 @@ export default function Results348402475920572380527() {
             </tr>
             <tr>
               <th className="border-black px-4 py-2">Event</th>
-              <th className="border-black px-4 py-2">Unique Users</th>
+              <th className="border-black px-4 py-2">Count</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="border-black px-4 py-2">Event A</td>
-              <td className="border-black px-4 py-2">2</td>
-            </tr>
-            <tr>
-              <td className="border-black px-4 py-2">Event B</td>
-              <td className="border-black px-4 py-2">1</td>
-            </tr>
-            <tr>
-              <td className="border-black px-4 py-2">Event C</td>
-              <td className="border-black px-4 py-2">1</td>
-            </tr>
+            {Object.entries(eventSummary).map(([event, count]) => (
+              <tr key={event}>
+                <td className="border-black px-4 py-2">{event}</td>
+                <td className="border-black px-4 py-2">{count}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
