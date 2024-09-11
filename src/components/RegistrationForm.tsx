@@ -129,11 +129,19 @@ export default function RegistrationForm() {
         </div>
       </div>
       <Button
-        type="button" // Change to button to handle scanning
-        onClick={() => setIsScanning(true)} // Start scanning when clicked
-        className="w-full bg-blue-500 text-white rounded-lg h-12"
+        type="button" // Keep as button to handle both actions
+        onClick={async (e) => {
+          if (isSubmitted) {
+            setIsScanning(true); // Start scanning if already submitted
+          } else {
+            handleSubmit(e); // Pass the event object to handleSubmit
+          }
+        }}
+        className={`w-full ${
+          isSubmitted ? "bg-yellow-500" : errorMessage ? "bg-red-500" : "text-white bg-black"
+        } transition-colors duration-300 rounded-lg h-12`}
       >
-        Capture QR Code
+        {isSubmitted ? "Scan QR Code" : errorMessage ? errorMessage : "Capture QR Code"}
       </Button>
       {isScanning && (
         <div className="mt-4">
