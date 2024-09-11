@@ -3,7 +3,7 @@
 const AltBackground = () => {
   //Noise & Texture plugin developed byhttps://x.com/intent/follow?screen_name=rogie
   return (
-    <div className="invert fixed inset-0 w-full h-full overflow-hidden z-[-1]">
+    <div className="invert grayscale fixed inset-0 w-full h-full overflow-hidden z-[-1]">
       <iframe
         width="110%"
         height="100%"
