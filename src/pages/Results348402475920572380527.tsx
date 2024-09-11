@@ -120,7 +120,7 @@ export default function Results348402475920572380527() {
           </tbody>
         </table>
       </div>
-      {/* <div className="relative z-10 bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.7)] rounded-2xl shadow-lg p-4 max-w-md ">
+      <div className="relative z-10 bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.7)] rounded-2xl shadow-lg p-4 max-w-md ">
         <table className="min-w-full bg-transparent">
           <thead>
             <tr>
@@ -145,7 +145,7 @@ export default function Results348402475920572380527() {
             ))}
           </tbody>
         </table>
-      </div> */}
+      </div>
       <AltBackground />
     </div>
   );
