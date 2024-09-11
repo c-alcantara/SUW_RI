@@ -125,6 +125,7 @@ export default function RegistrationForm() {
             onChange={handleInputChange}
             className="rounded-lg shadow-md h-10 pl-2 pr-1"
           >
+            <option value="Optional">Optional</option> {/* New default option */}
             <option value="Participant">Participant</option>
             <option value="Founder">Founder</option>
           </select>
