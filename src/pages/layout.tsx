@@ -7,7 +7,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-    
+      <body className="bg-background text-foreground"> {/* Apply global styles here */}
+        {children}
+      </body>
     </html>
   );
 }

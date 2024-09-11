@@ -27,7 +27,10 @@
       ]
     },
     "target": "es5",
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "types": [
+      "next"
+    ]
   },
   "include": [
     "next-env.d.ts",
