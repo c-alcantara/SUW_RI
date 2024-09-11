@@ -11,7 +11,7 @@ export default function Home() {
     const timer = setTimeout(() => {
       setShowForm(true);
       setShowBckg(false);
-    }, 1300);
+    }, 1100);
 
     return () => clearTimeout(timer); // Cleanup timer on unmount
   }, []);
