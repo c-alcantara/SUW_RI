@@ -49,7 +49,6 @@ const handleRegisterOnly = async (e: React.FormEvent) => {
   
   await handleScan(null);
   setIsSubmitting(false);
-  alert("Registration submitted!");
 };
 const handleScan = async (data: string | null) => {
   if (!isSubmitting) {
@@ -63,7 +62,7 @@ const handleScan = async (data: string | null) => {
       const responseData = await response.json();
       if (response.ok) {
         setIsScanning(false);
-        alert("Entry submitted!");
+        alert("Sucess!");
       } else {
         setErrorMessage(responseData.error);
         setIsScanning(false);
