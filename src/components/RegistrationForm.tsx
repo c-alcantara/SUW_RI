@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Label } from "../styles/ui/label";
 import { Input } from "../styles/ui/input";
 import { Button } from "../styles/ui/button";
@@ -57,9 +57,22 @@ export default function RegistrationForm() {
     }
   };
 
+  const isAvailable = new Date("2024-09-28") <= new Date(); // Check if the date is past September 28, 2024
+
+  useEffect(() => {
+    if (!isAvailable) {
+      window.location.href = "https://suwri.vercel.app/"; // Redirect to home or another page
+    }
+  }, [isAvailable]);
+
   return (
-    <form onSubmit={handleCapture} className="space-y-6 max-w-md mx-auto p-6  bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.7)] rounded-2xl shadow-lg">
-      <h2 className="text-2xl font-bold mb-[-5px] p-0">Startup Week Rhode Island</h2>
+    <form
+      onSubmit={handleCapture}
+      className="space-y-7 max-w-md mx-auto p-6  bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.7)] rounded-2xl shadow-lg"
+    >
+      <h2 className="text-2xl font-bold mb-[-5px] p-0">
+        Startup Week Rhode Island
+      </h2>
       {/* <p className="mb-0">September 20th - September 27th</p> */}
       <div className="space-y-4">
         {["name", "email", "phone"].map((field) => (
@@ -77,7 +90,9 @@ export default function RegistrationForm() {
           </div>
         ))}
         <div>
-          <Label className="font-bold mr-2" htmlFor="affiliation">Affiliation:</Label>
+          <Label className="font-bold mr-2" htmlFor="affiliation">
+            Affiliation:
+          </Label>
           <select
             id="affiliation"
             name="affiliation"
@@ -86,20 +101,48 @@ export default function RegistrationForm() {
             className="rounded-lg shadow-md h-10 pl-2 pr-1 text-base" // Set font size to 16px
           >
             {["Optional", "Participant", "Founder"].map((option) => (
-              <option key={option} value={option}>{option}</option>
+              <option key={option} value={option}>
+                {option}
+              </option>
             ))}
           </select>
         </div>
       </div>
       <Button
         type="submit"
-        className={`w-full ${isScanning ? "bg-yellow-500" : errorMessage ? "bg-red-500" : "text-white bg-black shadow-xl"} transition-colors duration-300 rounded-lg h-10`}
+        className={`w-full ${
+          isScanning
+            ? "bg-yellow-500"
+            : errorMessage
+            ? "bg-red-500"
+            : "text-white bg-black shadow-xl"
+        } transition-colors duration-300 rounded-lg h-10`}
       >
-        {isScanning ? "Scanning..." : isSubmitted ? "Scan QR Code" : errorMessage || "Capture QR Code"}
+        {isScanning
+          ? "Scanning..."
+          : isSubmitted
+          ? "Scan QR Code"
+          : errorMessage || "Capture QR Code"}
       </Button>
+      <Button
+        type="button"
+        className={`w-full border-2 ${isAvailable ? 'border-gray-400 text-gray-400' : 'border-black text-black cursor-not-allowed'} bg-transparent rounded-lg h-10 mt-2 transition-colors duration-300`} // Updated styles to be less gray
+        onClick={() => isAvailable && (window.location.href = "/Results")} // Redirect to Results.tsx page only if available
+        disabled={!isAvailable} // Disable button if not available
+      >
+        Contest Results
+      </Button>
+      <p className="text-left text-sm text-gray-500 mt-0">
+        (Results available September 28th)
+      </p>
       {isScanning && (
-        <div className="mt-4 rounded-lg overflow-hidden">
-          <QrReader delay={300} onError={(err) => console.error(err)} onScan={handleScan} style={{ width: "100%" }} />
+        <div className="mt-0 rounded-lg overflow-hidden">
+          <QrReader
+            delay={300}
+            onError={(err) => console.error(err)}
+            onScan={handleScan}
+            style={{ width: "100%" }}
+          />
         </div>
       )}
     </form>
