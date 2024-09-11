@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Label } from "../styles/ui/label";
 import { Input } from "../styles/ui/input";
 import { Button } from "../styles/ui/button";
@@ -33,29 +33,30 @@ export default function RegistrationForm() {
       setErrorMessage("Please enter a valid email address.");
       return;
     }
-    try {
-      const response = await fetch("/api/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        setIsSubmitted(true);
-        setIsScanning(true);
-      } else {
-        setErrorMessage(data.error);
-      }
-    } catch {
-      setErrorMessage("An unexpected error occurred.");
-    }
+    setIsSubmitted(true);
+    setIsScanning(true);
   };
 
-  const handleScan = (data: string | null) => {
+  const handleScan = async (data: string | null) => {
     if (data) {
-      setFormData((prev) => ({ ...prev, event: data }));
-      setIsScanning(false);
-      alert("Entry submitted!");
+      try {
+        const response = await fetch("/api/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...formData, event: data }),
+        });
+        const responseData = await response.json();
+        if (response.ok) {
+          setIsScanning(false);
+          alert("Entry submitted!");
+        } else {
+          setErrorMessage(responseData.error);
+          setIsScanning(false);
+        }
+      } catch {
+        setErrorMessage("An unexpected error occurred.");
+        setIsScanning(false);
+      }
     }
   };
 
