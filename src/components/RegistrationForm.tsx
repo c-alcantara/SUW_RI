@@ -46,7 +46,7 @@ const handleRegisterOnly = async (e: React.FormEvent) => {
     setErrorMessage("Please enter a valid email address.");
     return;
   }
-  setIsSubmitting(true);
+  
   await handleScan(null);
   setIsSubmitting(false);
   alert("Registration submitted!");
