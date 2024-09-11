@@ -11,13 +11,11 @@ export default function RootLayout({
       <Head>
         <meta
           name="viewport"
-          content="width=device-width, initial-scale=1, user-scalable=no"
+          content="width=device-width, initial-scale=1, user-scalable=no" // Prevent zooming
         />
         {/* Other head elements can go here */}
       </Head>
       <body className="bg-background text-foreground">
-        {" "}
-        {/* Apply global styles here */}
         {children}
       </body>
     </html>

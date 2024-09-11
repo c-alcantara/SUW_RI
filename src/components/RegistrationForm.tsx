@@ -6,6 +6,12 @@ import { CheckIcon } from "@heroicons/react/24/solid";
 import QrReader from "react-qr-reader";
 import { Inter } from 'next/font/google'; // Example for Google Fonts
 
+import { useState } from "react";
+import { Label } from "../styles/ui/label";
+import { Input } from "../styles/ui/input";
+import { Button } from "../styles/ui/button";
+import QrReader from "react-qr-reader";
+
 export default function RegistrationForm() {
   const [formData, setFormData] = useState({
     name: "",
@@ -17,14 +23,15 @@ export default function RegistrationForm() {
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [isScanning, setIsScanning] = useState(false); // State to control QR scanning
+  const [isScanning, setIsScanning] = useState(false);
+  const [buttonText, setButtonText] = useState("Capture QR Code");
+  const [buttonColor, setButtonColor] = useState("text-white bg-black");
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
 
-    // Format phone number by removing non-digit characters
     if (name === "phone") {
       const formattedPhone = value.replace(/\D/g, "");
       setFormData((prev) => ({
@@ -43,7 +50,6 @@ export default function RegistrationForm() {
     e.preventDefault();
     setErrorMessage(null);
 
-    // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
       setErrorMessage("Please enter a valid email address.");
@@ -63,8 +69,14 @@ export default function RegistrationForm() {
 
       if (response.ok) {
         setIsSubmitted(true);
-        console.log("Form submitted:", data);
-        setIsScanning(true); // Start scanning after successful submission
+        setButtonText("Entry Successful!");
+        setButtonColor("bg-green-500");
+        setIsScanning(false);
+
+        setTimeout(() => {
+          setButtonText("Scan QR Code");
+          setButtonColor("text-white bg-black");
+        }, 2500);
       } else {
         setErrorMessage(data.error);
         console.error("Error submitting form:", data.error);
@@ -79,9 +91,9 @@ export default function RegistrationForm() {
     if (data) {
       setFormData((prev) => ({
         ...prev,
-        event: data, // Set the scanned QR code data to the event field
+        event: data,
       }));
-      setIsScanning(false); // Stop scanning after capturing the QR code
+      handleCapture(new Event("submit"));
     }
   };
 
@@ -108,7 +120,7 @@ export default function RegistrationForm() {
               value={formData[field as keyof typeof formData]}
               onChange={handleInputChange}
               required
-              className="rounded-lg shadow-md h-10 pl-2 text-base" // Set font size to at least 16px
+              className="rounded-lg shadow-md h-10 pl-2 text-base"
               placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
             />
           </div>
@@ -131,21 +143,9 @@ export default function RegistrationForm() {
       </div>
       <Button
         type="submit"
-        className={`w-full ${
-          isScanning
-            ? "bg-yellow-500"
-            : errorMessage
-            ? "bg-red-500"
-            : "text-white bg-black"
-        } transition-colors duration-300 rounded-lg h-12`}
+        className={`w-full ${buttonColor} transition-colors duration-300 rounded-lg h-12`}
       >
-        {isScanning
-          ? "Scanning..."
-          : isSubmitted
-          ? "Scan QR Code"
-          : errorMessage
-          ? errorMessage
-          : "Capture QR Code"}
+        {buttonText}
       </Button>
       {isScanning && (
         <div className="mt-4 rounded-lg overflow-hidden">
