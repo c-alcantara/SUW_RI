@@ -38,7 +38,7 @@ export default function RegistrationForm() {
     setIsSubmitted(true);
     setIsScanning(true);
   };
-  
+
 const handleRegisterOnly = async (e: React.FormEvent) => {
   e.preventDefault();
   setErrorMessage(null);
@@ -83,7 +83,7 @@ const handleScan = async (data: string | null) => {
       className="space-y-7 max-w-md mx-auto p-6 bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.7)] rounded-2xl shadow-lg"
     >
       <h2 className="text-2xl font-bold mb-[-5px] p-0">
-        Startup Weeknpm
+        Startup Week
       </h2>
       {!isScanning && (
         <div className="space-y-4">
