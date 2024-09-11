@@ -50,6 +50,7 @@
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
   }
+  
   .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
@@ -78,45 +79,28 @@
   }
 }
 
-
-
-/* start background */
 body {
   background: #000;
   overflow: hidden;
 }
 
 .background {
-  animation: skew 1s .3s ease-in-out forwards ;
-
+  animation: skew 1s .3s ease-in-out forwards;
   width: 100vw;
   height: 100vh;
-  background-image: linear-gradient(
-      to left,
-      #fff 30px,
-      #fff 30px,
-      transparent 30px,
-      transparent 30px
-    ),
-    linear-gradient(#ffffff 30px, #000000 30px, rgba(0, 0, 0, 0) 300px, rgba(0, 0, 0, 0) 300px);
+  background-image: linear-gradient(to left, #fff 30px, #fff 30px, transparent 30px, transparent 30px),
+                    linear-gradient(#ffffff 30px, #000000 30px, rgba(0, 0, 0, 0) 300px, rgba(0, 0, 0, 0) 300px);
   background-size: 30px 30px;
   background-position: center;
-
 }
-@keyframes skew {
-  from {
 
-  }
+@keyframes skew {
   100% {
-    /* transform: skew(360deg); */
     background-size: 100% 100%;
     filter: opacity(0);
-  
-
   }
-
 }
-/* end background */
+
 .title {
   user-select: none;
   text-transform: uppercase;
@@ -126,49 +110,43 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  text-wrap: balance;
   font-weight: 900;
-
   color: #fff;
   line-height: 1.3em;
   letter-spacing: 0.1ch;
 }
+
 html {
   font-family: system-ui, sans-serif;
 }
+
 .fade-in {
-
-  animation: fadeIn .5s ; /* Fade in animation */
+  animation: fadeIn .5s; /* Fade in animation */
 }
-
-
 
 @keyframes fadeOut {
   to {
-    filter: blur(50px); /* Remove blur */
+    filter: blur(50px);
     opacity: 0;
-
   }
 }
 
 @keyframes fadeIn {
   from {
-    filter: blur(50px); /* Remove blur */
+    filter: blur(50px);
     scale: .8;
     opacity: 0;
   }
   to {
-    filter: blur(0px); /* Remove blur */
+    filter: blur(0px);
     opacity: 1;
     scale: 1;
   }
 }
 
-
 .fade-out {
-   filter: blur(0px); /* Remove blur */
- opacity: 100;
-  animation: fadeOut 1s forwards 2s; /* Fade in animation */
-
+  filter: blur(0px);
+  opacity: 100;
+  animation: fadeOut 1s forwards 2s; /* Fade out animation */
 }
 

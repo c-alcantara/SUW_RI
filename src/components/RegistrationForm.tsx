@@ -9,7 +9,7 @@ export default function RegistrationForm() {
     name: "",
     email: "",
     phone: "",
-    affiliation: "Optional", // Default to "Optional"
+    affiliation: "Optional", // Default 
     event: "",
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -58,9 +58,9 @@ export default function RegistrationForm() {
   };
 
   return (
-    <form onSubmit={handleCapture} className="space-y-6 max-w-md mx-auto p-6 backdrop-blur-2xl border-2 border-white bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.55)] rounded-2xl">
+    <form onSubmit={handleCapture} className="space-y-6 max-w-md mx-auto p-6  bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.7)] rounded-2xl shadow-lg">
       <h2 className="text-2xl font-bold mb-[-5px] p-0">Startup Week Rhode Island</h2>
-      <p className="mb-0">September 20th - September 27th</p>
+      {/* <p className="mb-0">September 20th - September 27th</p> */}
       <div className="space-y-4">
         {["name", "email", "phone"].map((field) => (
           <div key={field}>
@@ -93,7 +93,7 @@ export default function RegistrationForm() {
       </div>
       <Button
         type="submit"
-        className={`w-full ${isScanning ? "bg-yellow-500" : errorMessage ? "bg-red-500" : "text-white bg-black"} transition-colors duration-300 rounded-lg h-12`}
+        className={`w-full ${isScanning ? "bg-yellow-500" : errorMessage ? "bg-red-500" : "text-white bg-black shadow-xl"} transition-colors duration-300 rounded-lg h-10`}
       >
         {isScanning ? "Scanning..." : isSubmitted ? "Scan QR Code" : errorMessage || "Capture QR Code"}
       </Button>
