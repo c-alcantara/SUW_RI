@@ -27,13 +27,21 @@ export default function Results348402475920572380527() {
     const fetchData = async () => {
       try {
         const response = await databases.listDocuments(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!, process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID!);
-        setData(response.documents); // This should now work without type errors
+        const uniqueEntries = new Map();
+
+        response.documents.forEach(item => {
+          const key = `${item.name}-${item.email}-${item.phone}`;
+          if (!uniqueEntries.has(key)) {
+            uniqueEntries.set(key, { ...item, eventCount: 0 });
+          }
+          uniqueEntries.get(key).eventCount += 1; // Increment event count
+        });
+
+        setData(Array.from(uniqueEntries.values())); // Convert map to array
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-
-    fetchData();
   }, []);
 
   return (
