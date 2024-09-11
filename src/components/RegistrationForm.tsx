@@ -3,7 +3,7 @@ import { Label } from "../styles/ui/label";
 import { Input } from "../styles/ui/input";
 import { Button } from "../styles/ui/button";
 import { CheckIcon } from "@heroicons/react/24/solid";
- import QrReader from "react-qr-reader";
+import QrReader from "react-qr-reader";
 import { Inter } from 'next/font/google'; // Example for Google Fonts
 
 export default function RegistrationForm() {
@@ -108,7 +108,7 @@ export default function RegistrationForm() {
               value={formData[field as keyof typeof formData]}
               onChange={handleInputChange}
               required
-              className="rounded-lg shadow-md h-10 pl-2"
+              className="rounded-lg shadow-md h-10 pl-2 text-base" // Set font size to at least 16px
               placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
             />
           </div>
