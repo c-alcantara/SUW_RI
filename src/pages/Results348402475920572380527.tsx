@@ -105,78 +105,80 @@ export default function Results348402475920572380527() {
   };
 
 return (
-    <div className="container mx-auto py-10 h-screen flex flex-col items-center justify-center relative">
-      {showBckg && <div className="fade-out"></div>}
-      <div className="relative z-10 bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.7)] rounded-2xl shadow-lg p-4 max-w-md mb-6">
-        <h2 className="text-2xl font-bold mb-4">SUWRI Results</h2>
-
-        <table className="min-w-full bg-transparent">
-          <thead>
-            <tr>
-              <th className="border-black px-4 py-2">Rank</th>
-              <th className="border-black px-4 py-2">ID</th>
-              <th className="border-black px-4 py-2">Name</th>
-              <th className="border-black px-4 py-2">Events</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((item, index) => (
-              <Fragment key={item.$id}>
+  <div className="container mx-auto py-10 h-screen flex flex-col items-center justify-center relative">
+    {showBckg && <div className="fade-out"></div>}
+    <div className="relative z-10 bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.7)] rounded-2xl shadow-lg p-4 max-w-md mb-6">
+      <h2 className="text-2xl font-bold mb-1">SUWRI Results</h2>
+      <p>Tapb event count to show the events visited</p>
+      <table className="min-w-full bg-transparent">
+        <thead>
+          <tr>
+            <th className="border-black px-4 py-2">Rank</th>
+            <th className="border-black px-4 py-2">ID</th>
+            <th className="border-black px-4 py-2">Name</th>
+            <th className="border-black px-4 py-2">Events</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((item, index) => (
+            <Fragment key={item.$id}>
+              <tr>
+                <td className="border-black px-4 py-2">{index + 1}</td>
+                <td className="border-black px-4 py-2">{item.id}</td>
+                <td className="border-black px-4 py-2">{item.displayName}</td>
+                <td
+                  className="border-black px-2 py-2 cursor-pointer font-bold text-lg border-black px-4 py-2 "
+                  onClick={() => toggleExpand(item.$id)}
+                >
+                  {item.eventCount}
+                </td>
+              </tr>
+              {expandedEntry === item.$id && (
                 <tr>
-                  <td className="border-black px-4 py-2">{index + 1}</td>
-                  <td className="border-black px-4 py-2">{item.id}</td>
-                  <td className="border-black px-4 py-2">{item.displayName}</td>
-                  <td
-                    className="border-black px-4 py-2 cursor-pointer font-bold text-lg"
-                    onClick={() => toggleExpand(item.$id)}
-                  >
-                    {item.eventCount}
+                  <td colSpan={4} className="border-black px-4 py-2">
+                    <ul>
+                      {item.events.map((event, index) => (
+                        <li key={index} className="font-bold ">
+                          {event}
+                        </li>
+                      ))}
+                    </ul>
                   </td>
                 </tr>
-                {expandedEntry === item.$id && (
-                  <tr>
-                    <td colSpan={4} className="border-black px-4 py-2">
-                      <ul>
-                        {item.events.map((event, index) => (
-                          <li key={index} className="font-bold">{event}</li>
-                        ))}
-                      </ul>
-                    </td>
-                  </tr>
-                )}
-              </Fragment>
-            ))}
-          </tbody>
-        </table>
-      </div>
-       <div className="relative z-10 bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.7)] rounded-2xl shadow-lg p-4 max-w-md">
-        <table className="min-w-full bg-transparent">
-          <thead>
-            <tr>
-              <th
-                className="border-black px-4 py-2 text-2xl font-bold"
-                colSpan={2}
-              >
-                Top Events
-              </th>
-            </tr>
-            <tr>
-              <th className="border-black px-4 py-2">Event</th>
-              <th className="border-black px-4 py-2">Count</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Object.entries(eventSummary).map(([event, count]) => (
-              <tr key={event}>
-                <td className="border-black px-4 py-2">{event}</td>
-                <td className="border-black px-4 py-2">{count}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
- 
-     <AltBackground />
+              )}
+            </Fragment>
+          ))}
+        </tbody>
+      </table>
     </div>
-  );
+    <div className="relative z-10 bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.7)] rounded-2xl shadow-lg p-4 max-w-md">
+      <table className="min-w-full bg-transparent">
+        <thead>
+          <tr>
+            <th
+              className="border-black px-4 py-2 text-2xl font-bold"
+              colSpan={2}
+            >
+              Top Events
+            </th>
+          </tr>
+          <tr>
+            <th className="border-black px-4 py-2">Event</th>
+            <th className="border-black  px-4 py-2">Count</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Object.entries(eventSummary).map(([event, count]) => (
+            <tr key={event}>
+              <td className="border-black px-4 py-2">{event}</td>
+              <td className="border-black px-4 py-2">{count}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <AltBackground />
+  </div>
+);
 }
