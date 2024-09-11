@@ -3,6 +3,7 @@ import { Label } from "../styles/ui/label";
 import { Input } from "../styles/ui/input";
 import { Button } from "../styles/ui/button";
 import QrReader from "react-qr-reader";
+import { jsx as _jsx } from "react/jsx-runtime";
 
 export default function RegistrationForm() {
   const [formData, setFormData] = useState({
@@ -15,7 +16,8 @@ export default function RegistrationForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isScanning, setIsScanning] = useState(false);
-const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -36,33 +38,43 @@ const [isSubmitting, setIsSubmitting] = useState(false);
     setIsSubmitted(true);
     setIsScanning(true);
   };
-
-  const handleScan = async (data: string | null) => {
-    if (data && !isSubmitting) {
-      setIsSubmitting(true);
-      try {
-        const response = await fetch("/api/submit", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...formData, event: data }),
-        });
-        const responseData = await response.json();
-        if (response.ok) {
-          setIsScanning(false);
-          alert("Entry submitted!");
-        } else {
-          setErrorMessage(responseData.error);
-          setIsScanning(false);
-        }
-      } catch {
-        setErrorMessage("An unexpected error occurred.");
+  
+const handleRegisterOnly = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setErrorMessage(null);
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    setErrorMessage("Please enter a valid email address.");
+    return;
+  }
+  setIsSubmitting(true);
+  await handleScan(null);
+  setIsSubmitting(false);
+  alert("Registration submitted!");
+};
+const handleScan = async (data: string | null) => {
+  if (!isSubmitting) {
+    setIsSubmitting(true);
+    try {
+      const response = await fetch("/api/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...formData, event: data }),
+      });
+      const responseData = await response.json();
+      if (response.ok) {
+        setIsScanning(false);
+        alert("Entry submitted!");
+      } else {
+        setErrorMessage(responseData.error);
         setIsScanning(false);
       }
-      setIsSubmitting(false);
+    } catch {
+      setErrorMessage("An unexpected error occurred.");
+      setIsScanning(false);
     }
-  };
-
-
+    setIsSubmitting(false);
+  }
+};
   const isAvailable = new Date("2024-09-11") <= new Date(); // Check if the date is past September 28, 2024
 
   return (
@@ -71,7 +83,7 @@ const [isSubmitting, setIsSubmitting] = useState(false);
       className="space-y-7 max-w-md mx-auto p-6 bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.7)] rounded-2xl shadow-lg"
     >
       <h2 className="text-2xl font-bold mb-[-5px] p-0">
-        Startup Week Rhode Island
+        Startup Weeknpm
       </h2>
       {!isScanning && (
         <div className="space-y-4">
@@ -109,6 +121,13 @@ const [isSubmitting, setIsSubmitting] = useState(false);
           </div>
         </div>
       )}
+      <Button
+        type="button"
+        onClick={handleRegisterOnly}
+        className={`w-full text-white bg-black shadow-xl transition-colors duration-300 rounded-lg h-10`}
+      >
+        Register Only
+      </Button>
       <Button
         type="submit"
         className={`w-full ${
