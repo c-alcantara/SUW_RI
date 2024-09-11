@@ -90,7 +90,7 @@ export default function Results348402475920572380527() {
   return (
     <div className="container mx-auto py-10 h-screen flex flex-col items-center justify-center relative">
       {showBckg && <div className="fade-out"></div>}
-      <div className="relative z-10 bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.7)] rounded-2xl shadow-lg p-6 max-w-md border-2 border-black mb-6">
+      <div className="relative z-10 bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.7)] rounded-2xl shadow-lg p-4 max-w-md mb-6">
         <h2 className="text-2xl font-bold mb-4">SUWRI Results</h2>
         <table className="min-w-full bg-transparent">
           <thead>
@@ -120,7 +120,7 @@ export default function Results348402475920572380527() {
           </tbody>
         </table>
       </div>
-      <div className="relative z-10 bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.7)] rounded-2xl shadow-lg p-6 max-w-md border-2 border-black">
+      <div className="relative z-10 bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.7)] rounded-2xl shadow-lg p-4 max-w-md ">
         <table className="min-w-full bg-transparent">
           <thead>
             <tr>
