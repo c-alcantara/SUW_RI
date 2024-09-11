@@ -1,4 +1,5 @@
 import React from 'react'; // Add this line if necessary
+import Head from 'next/head'; // Add this line to import Head
 
 export default function RootLayout({
   children,
@@ -7,7 +8,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="bg-background text-foreground"> {/* Apply global styles here */}
+      <Head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, user-scalable=no"
+        />
+        {/* Other head elements can go here */}
+      </Head>
+      <body className="bg-background text-foreground">
+        {" "}
+        {/* Apply global styles here */}
         {children}
       </body>
     </html>
