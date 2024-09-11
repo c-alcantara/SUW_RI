@@ -9,7 +9,15 @@ client
 
 const databases = new Databases(client);
 
-
+interface sortedData {
+  name: string;
+  email: string;
+  phone: number;
+  eventCount: number;
+  events: string[];
+  displayName: string;
+  id: number;
+}
 
 export default function Results348402475920572380527() {
   const [showBckg, setShowBckg] = useState(true);

@@ -9,14 +9,16 @@ export default function RegistrationForm() {
     name: "",
     email: "",
     phone: "",
-    affiliation: "Optional", // Default 
+    affiliation: "Optional", // Default
     event: "",
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isScanning, setIsScanning] = useState(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -59,17 +61,19 @@ export default function RegistrationForm() {
 
   const isAvailable = new Date("2024-09-11") <= new Date(); // Check if the date is past September 28, 2024
 
-
   return (
     <form
       onSubmit={handleCapture}
-      className="space-y-7 max-w-md mx-auto p-6  bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.7)] rounded-2xl shadow-lg"
+      className="space-y-7 max-w-md mx-auto p-6 bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.7)] rounded-2xl shadow-lg"
     >
       <h2 className="text-2xl font-bold mb-[-5px] p-0">
         Startup Week Rhode Island
       </h2>
-      {/* <p className="mb-0">September 20th - September 27th</p> */}
-      <div className="space-y-4">
+      <div
+        className={`space-y-4 ${
+          isScanning ? "opacity-0 transition-opacity duration-500" : ""
+        }`}
+      >
         {["name", "email", "phone"].map((field) => (
           <div key={field}>
             <Input
@@ -79,7 +83,7 @@ export default function RegistrationForm() {
               value={formData[field as keyof typeof formData]}
               onChange={handleInputChange}
               required
-              className="rounded-lg shadow-md h-10 pl-2 text-base" // Set font size to 16px
+              className="rounded-lg shadow-md h-10 pl-2 text-base"
               placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
             />
           </div>
@@ -93,7 +97,7 @@ export default function RegistrationForm() {
             name="affiliation"
             value={formData.affiliation}
             onChange={handleInputChange}
-            className="rounded-lg shadow-md h-10 pl-2 pr-1 text-base" // Set font size to 16px
+            className="rounded-lg shadow-md h-10 pl-2 pr-1 text-base"
           >
             {["Optional", "Participant", "Founder"].map((option) => (
               <option key={option} value={option}>
@@ -121,9 +125,16 @@ export default function RegistrationForm() {
       </Button>
       <Button
         type="button"
-        className={`w-full border-2 ${isAvailable ? 'border-gray-400 text-gray-400' : 'border-black text-black cursor-not-allowed'} bg-transparent rounded-lg h-10 mt-2 transition-colors duration-300`} // Updated styles to be less gray
-        onClick={() => isAvailable && (window.location.href = "/Results348402475920572380527")} // Redirect to Results.tsx page only if available
-        disabled={!isAvailable} // Disable button if not available
+        className={`w-full border-2 ${
+          isAvailable
+            ? "border-black text-black"
+            : "border-gray-400 text-gray-400 cursor-not-allowed"
+        } bg-transparent rounded-lg h-10 mt-2 transition-colors duration-300`}
+        onClick={() =>
+          isAvailable &&
+          (window.location.href = "/Results348402475920572380527")
+        }
+        disabled={!isAvailable}
       >
         Contest Results
       </Button>
