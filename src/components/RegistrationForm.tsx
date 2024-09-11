@@ -59,12 +59,6 @@ export default function RegistrationForm() {
 
   const isAvailable = new Date("2024-09-28") <= new Date(); // Check if the date is past September 28, 2024
 
-  //enforce results availability
-  useEffect(() => {
-    if (!isAvailable) {
-      window.location.href = "https://suwri.vercel.app/"; // Redirect to home or another page
-    }
-  }, [isAvailable]);
 
   return (
     <form
