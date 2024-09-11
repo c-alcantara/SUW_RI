@@ -32,9 +32,15 @@ export default function Results348402475920572380527() {
         response.documents.forEach(item => {
           const key = `${item.name}-${item.email}-${item.phone}`;
           if (!uniqueEntries.has(key)) {
-            uniqueEntries.set(key, { ...item, eventCount: 0 });
+            uniqueEntries.set(key, { 
+              name: item.name, // Preserve name
+              email: item.email, // Preserve email
+              phone: item.phone, // Preserve phone
+              eventCount: 1 // Start count at 1 for the first occurrence
+            });
+          } else {
+            uniqueEntries.get(key).eventCount += 1; // Increment event count for subsequent occurrences
           }
-          uniqueEntries.get(key).eventCount += 1; // Increment event count
         });
 
         setData(Array.from(uniqueEntries.values())); // Convert map to array
