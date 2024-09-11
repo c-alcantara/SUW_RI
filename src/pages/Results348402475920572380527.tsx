@@ -60,7 +60,7 @@ export default function Results348402475920572380527() {
   }, []);
 
   return (
-    <div className="container mx-auto py-10 h-screen flex items-center justify-center relative border-2 border-black">
+    <div className="container mx-auto py-10 h-screen flex items-center justify-center relative ">
       {showBckg && <div className="fade-out"></div>}
       <div className="relative z-10 bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.7)] rounded-2xl shadow-lg p-6 max-w-md border-2 border-black">
         <h2 className="text-2xl font-bold mb-4">SUWRI Results</h2>
