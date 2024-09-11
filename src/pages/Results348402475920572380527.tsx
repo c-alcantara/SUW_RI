@@ -67,10 +67,11 @@ export default function Results348402475920572380527() {
         <table className="min-w-full bg-transparent ">
           <thead>
             <tr>
+              <th className="border-black px-4 py-2">ID</th>
               <th className="border-black px-4 py-2">Rank</th>{" "}
               {/* New Rank column */}
               <th className="border-black px-4 py-2">Name</th>
-              <th className="border-black px-4 py-2">ID</th>
+
               <th className="border-black px-4 py-2">Events</th>
             </tr>
           </thead>
@@ -81,10 +82,11 @@ export default function Results348402475920572380527() {
                 index // Use index for rank
               ) => (
                 <tr key={item.$id}>
+                  <td className="border-black px-4 py-2">{item.id}</td>
                   <td className="border-black px-4 py-2">{index + 1}</td>{" "}
                   {/* Display rank */}
                   <td className="border-black px-4 py-2">{item.displayName}</td>
-                  <td className="border-black px-4 py-2">{item.id}</td>
+
                   <td className="border-black px-4 py-2">{item.event}</td>
                 </tr>
               )

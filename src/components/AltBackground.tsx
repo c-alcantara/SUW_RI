@@ -15,4 +15,3 @@ const AltBackground = () => {
 
 export default AltBackground;
 
-
