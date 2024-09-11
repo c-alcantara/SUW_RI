@@ -82,6 +82,7 @@ export default function RegistrationForm() {
         event: data, // Set the scanned QR code data to the event field
       }));
       setIsScanning(false); // Stop scanning after capturing the QR code
+      alert("Entry submitted!"); // Show alert after capturing
     }
   };
 
