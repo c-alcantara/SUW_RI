@@ -15,7 +15,7 @@ export default function RegistrationForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isScanning, setIsScanning] = useState(false);
-
+const [isSubmitting, setIsSubmitting] = useState(false);
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -38,7 +38,8 @@ export default function RegistrationForm() {
   };
 
   const handleScan = async (data: string | null) => {
-    if (data) {
+    if (data && !isSubmitting) {
+      setIsSubmitting(true);
       try {
         const response = await fetch("/api/submit", {
           method: "POST",
@@ -57,8 +58,10 @@ export default function RegistrationForm() {
         setErrorMessage("An unexpected error occurred.");
         setIsScanning(false);
       }
+      setIsSubmitting(false);
     }
   };
+
 
   const isAvailable = new Date("2024-09-11") <= new Date(); // Check if the date is past September 28, 2024
 
