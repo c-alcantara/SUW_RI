@@ -4,7 +4,7 @@ import { Input } from "../styles/ui/input";
 import { Button } from "../styles/ui/button";
 import { CheckIcon } from "@heroicons/react/24/solid";
  import QrReader from "react-qr-reader";
-
+import { Inter } from 'next/font/google'; // Example for Google Fonts
 
 export default function RegistrationForm() {
   const [formData, setFormData] = useState({
