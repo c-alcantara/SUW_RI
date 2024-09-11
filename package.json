@@ -31,6 +31,7 @@
     "react-typed": "^2.0.12",
     "shadcn": "^2.0.1",
     "shadcn-ui": "^0.9.0",
+    "tailwind": "^4.0.0",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7"
   },
@@ -43,7 +44,7 @@
     "eslint": "^8.0.0",
     "eslint-config-next": "^12.3.4",
     "postcss": "^8.0.0",
-    "tailwindcss": "^3.4.1",
+    "tailwindcss": "^3.4.10",
     "typescript": "^5.0.0"
   },
   "overrides": {
