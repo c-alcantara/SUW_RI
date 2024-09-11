@@ -69,44 +69,42 @@ export default function RegistrationForm() {
       <h2 className="text-2xl font-bold mb-[-5px] p-0">
         Startup Week Rhode Island
       </h2>
-      <div
-        className={`space-y-4 ${
-          isScanning ? "opacity-0 transition-opacity duration-500" : ""
-        }`}
-      >
-        {["name", "email", "phone"].map((field) => (
-          <div key={field}>
-            <Input
-              id={field}
-              name={field}
-              type={field === "email" ? "email" : "text"}
-              value={formData[field as keyof typeof formData]}
+      {!isScanning && (
+        <div className="space-y-4">
+          {["name", "email", "phone"].map((field) => (
+            <div key={field}>
+              <Input
+                id={field}
+                name={field}
+                type={field === "email" ? "email" : "text"}
+                value={formData[field as keyof typeof formData]}
+                onChange={handleInputChange}
+                required
+                className="rounded-lg shadow-md h-10 pl-2 text-base"
+                placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
+              />
+            </div>
+          ))}
+          <div>
+            <Label className="font-bold mr-2" htmlFor="affiliation">
+              Affiliation:
+            </Label>
+            <select
+              id="affiliation"
+              name="affiliation"
+              value={formData.affiliation}
               onChange={handleInputChange}
-              required
-              className="rounded-lg shadow-md h-10 pl-2 text-base"
-              placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
-            />
+              className="rounded-lg shadow-md h-10 pl-2 pr-1 text-base"
+            >
+              {["Optional", "Participant", "Founder"].map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
           </div>
-        ))}
-        <div>
-          <Label className="font-bold mr-2" htmlFor="affiliation">
-            Affiliation:
-          </Label>
-          <select
-            id="affiliation"
-            name="affiliation"
-            value={formData.affiliation}
-            onChange={handleInputChange}
-            className="rounded-lg shadow-md h-10 pl-2 pr-1 text-base"
-          >
-            {["Optional", "Participant", "Founder"].map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
         </div>
-      </div>
+      )}
       <Button
         type="submit"
         className={`w-full ${
