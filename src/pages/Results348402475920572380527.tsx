@@ -3,6 +3,7 @@ import RegistrationForm from '../components/RegistrationForm';
 
 import { useEffect, useState } from "react";
 import Backgr from "../components/Backgr";
+import Backgrz from "../components/Backgr";
 import { Client, Databases } from 'appwrite';
 
 const client = new Client();
@@ -46,7 +47,7 @@ export default function Results348402475920572380527() {
               <th className="border-black px-4 py-2">Name</th>
               <th className="border-black px-4 py-2">Email</th>
               <th className="border-black px-4 py-2">Phone</th>
-              <th className="border-black px-4 py-2">Events</th>
+              <th className="border-black px-4 py-2">Event</th>
             </tr>
           </thead>
           <tbody>
@@ -63,7 +64,7 @@ export default function Results348402475920572380527() {
           </tbody>
         </table>
       </div>
-      <Backgr />
+      <Backgrz />
     </div>
   );
 }
