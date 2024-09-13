@@ -1,9 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Label } from "../styles/ui/label";
 import { Input } from "../styles/ui/input";
 import { Button } from "../styles/ui/button";
 import QrReader from "react-qr-reader";
-import { jsx as _jsx } from "react/jsx-runtime";
 
 export default function RegistrationForm() {
   const [formData, setFormData] = useState({
@@ -17,6 +16,17 @@ export default function RegistrationForm() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isScanning, setIsScanning] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768); // Adjust the width as needed
+    };
+
+    handleResize(); // Check on mount
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -140,22 +150,24 @@ export default function RegistrationForm() {
       >
         Register Only
       </Button>
-      <Button
-        type="submit"
-        className={`w-full ${
-          isScanning
-            ? "bg-yellow-500"
-            : errorMessage
-            ? "bg-red-500"
-            : "text-white bg-black shadow-xl"
-        } transition-colors duration-300 rounded-lg h-10`}
-      >
-        {isScanning
-          ? "Scanning..."
-          : isSubmitted
-          ? "Scan QR Code"
-          : errorMessage || "Capture QR Code"}
-      </Button>
+      {isMobile && (
+        <Button
+          type="submit"
+          className={`w-full ${
+            isScanning
+              ? "bg-yellow-500"
+              : errorMessage
+              ? "bg-red-500"
+              : "text-white bg-black shadow-xl"
+          } transition-colors duration-300 rounded-lg h-10`}
+        >
+          {isScanning
+            ? "Scanning..."
+            : isSubmitted
+            ? "Scan QR Code"
+            : errorMessage || "Capture QR Code"}
+        </Button>
+      )}
       <Button
         type="button"
         className={`w-full border-2 ${
