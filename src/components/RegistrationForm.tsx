@@ -18,15 +18,6 @@ export default function RegistrationForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768); // Adjust the width as needed
-    };
-
-    handleResize(); // Check on mount
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -104,9 +95,11 @@ export default function RegistrationForm() {
   return (
     <form
       onSubmit={handleCapture}
-      className="space-y-7 max-w-md mx-auto p-6 bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.7)] rounded-2xl shadow-lg"
+      className="filter-blur-100 space-y-7 max-w-md mx-auto p-6 bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.7)] rounded-2xl shadow-lg"
     >
-      <h2 className="text-2xl font-bold mb-[-5px] p-0">Startup Week</h2>
+      <h2 className="text-2xl font-bold mb-[-5px] p-0">
+        Startup Week RI Registration
+      </h2>
       {!isScanning && (
         <div className="space-y-4">
           {["name", "email", "phone"].map((field) => (
@@ -121,8 +114,7 @@ export default function RegistrationForm() {
                 className="rounded-lg shadow-md h-10 pl-2 text-base"
                 placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
               />
-              <p className="text-xs text-red-500">Required*</p>{" "}
-              
+              <p className="text-xs text-gray-500">Required*</p>{" "}
             </div>
           ))}
           <div>
@@ -133,14 +125,13 @@ export default function RegistrationForm() {
               onChange={handleInputChange}
               className="rounded-lg shadow-md h-10 pl-2 pr-1 text-base"
             >
-              {["Affiliation? (optional)", "Participant", "Founder"].map(
-                (option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                )
-              )}
+              {["Affiliation?", "Participant", "Founder"].map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
             </select>
+            <p className="text-xs text-gray-500">Optional</p>{" "}
           </div>
         </div>
       )}
