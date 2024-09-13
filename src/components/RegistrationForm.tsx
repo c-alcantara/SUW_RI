@@ -120,7 +120,7 @@ export default function RegistrationForm() {
                 value={formData[field as keyof typeof formData]}
                 onChange={handleInputChange}
                 required
-                className="rounded-lg shadow-md h-10 pl-2 text-base"
+                className="rounded-lg shadow-md h-10 pl-2 text-base border-0"
                 placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
               />
               <p className="text-xs text-gray-500">Required*</p>{" "}
