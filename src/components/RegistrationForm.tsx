@@ -106,7 +106,7 @@ export default function RegistrationForm() {
   return (
     <form
       onSubmit={handleCapture}
-      className="scale-90 space-y-7 max-w-md mx-auto p-6 bg-gradient-to-t from-[rgba(255,255,255,0.8)] to-[rgba(255,255,255,0.6)] rounded-2xl shadow-lg backdrop-filter backdrop-blur-md"
+      className="border-2 border-white space-y-7 max-w-md mx-auto p-6 bg-gradient-to-t from-[rgba(255,255,255,0.95)] to-[rgba(255,255,255,0.6)] rounded-2xl shadow-lg backdrop-filter backdrop-blur-md"
     >
       <h2 className="text-2xl font-bold mb-2">Startup Week RI Registration</h2>
       {!isScanning && (
@@ -120,7 +120,7 @@ export default function RegistrationForm() {
                 value={formData[field as keyof typeof formData]}
                 onChange={handleInputChange}
                 required
-                className="rounded-lg h-10 pl-3 text-md border-0"
+                className=" rounded-xl h-10 pl-3 text-md border-0 "
                 placeholder={`${
                   field.charAt(0).toUpperCase() + field.slice(1)
                 } (Required)`}
@@ -133,50 +133,54 @@ export default function RegistrationForm() {
               name="affiliation"
               value={formData.affiliation}
               onChange={handleInputChange}
-              className="rounded-lg shadow-md h-10 pl-2 pr-1 text-base"
+              className="rounded-3xl shadow-md h-10 pl-3 text-base" // Increased pr-1 to pr-3
             >
-              {["Affiliation?", "Participant", "Founder"].map((option) => (
+              {["Affiliation", "Participant", "Founder"].map((option) => (
                 <option key={option} value={option}>
                   {option}
                 </option>
               ))}
             </select>
-            <p className="text-xs text-black opacity-50 pt-1">Optional</p>
+            <p className="text-xs text-black opacity-50 pt-1">(Optional)</p>
           </div>
         </div>
-      )}
-      <Button
-        type="button"
-        onClick={handleRegisterOnly}
-        className="w-full text-white bg-black font-bold shadow-xl transition-colors duration-300 rounded-lg h-10"
-      >
-        Register
-      </Button>
-      {isMobile && (
+      )} 
+      <div className="flex justify-between space-x-3">
+        {" "}
+        {/* Flex container for buttons */}
         <Button
-          type="submit"
-          className={`w-full ${
-            isScanning
-              ? "bg-yellow-500"
-              : errorMessage
-              ? "bg-red-500"
-              : "text-white font-bold bg-black shadow-xl"
-          } transition-colors duration-300 rounded-lg h-10`}
+          type="button"
+          onClick={handleRegisterOnly}
+          className={`w-1/2 text-white bg-black shadow-xl transition-colors duration-300 rounded-lg h-10`}
         >
-          {isScanning
-            ? "Scanning..."
-            : isSubmitted
-            ? "Scan QR Code"
-            : errorMessage || "Capture QR Code"}
+          Register Only
         </Button>
-      )}
+        {isMobile && (
+          <Button
+            type="submit"
+            className={`w-1/2 ${
+              isScanning
+                ? "bg-yellow-500"
+                : errorMessage
+                ? "bg-red-500"
+                : "text-white bg-black shadow-xl"
+            } transition-colors duration-300 rounded-lg h-10`}
+          >
+            {isScanning
+              ? "Scanning..."
+              : isSubmitted
+              ? "Scan QR Code"
+              : errorMessage || "Capture QR Code"}
+          </Button>
+        )}
+      </div>
       <Button
         type="button"
         className={`w-full border-2 ${
           isAvailable
             ? "border-black text-black"
             : "border-black text-black opacity-50  cursor-not-allowed"
-        } bg-transparent rounded-lg h-10 mt-2 transition-colors duration-300`}
+        } bg-transparent rounded-xl h-10 mt-0 transition-colors duration-300`}
         onClick={() =>
           isAvailable &&
           (window.location.href = "/Results348402475920572380527")
