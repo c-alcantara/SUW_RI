@@ -104,7 +104,7 @@ export default function RegistrationForm() {
   return (
     <form
       onSubmit={handleCapture}
-      className="filter-blur-100 space-y-7 max-w-md mx-auto p-6 bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.7)] rounded-2xl shadow-lg"
+      className="scale-90 filter-blur-100 space-y-7 max-w-md mx-auto p-6 bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.7)] rounded-2xl shadow-lg"
     >
       <h2 className="text-2xl font-bold mb-[-5px] p-0">
         Startup Week Rhode Island Registration
