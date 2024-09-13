@@ -99,7 +99,7 @@ export default function RegistrationForm() {
     }
   };
 
-  const isAvailable = new Date("2024-09-11") <= new Date();
+  const isAvailable = new Date("2024-09-28") <= new Date();
 
   return (
     <form
@@ -121,12 +121,11 @@ export default function RegistrationForm() {
                 className="rounded-lg shadow-md h-10 pl-2 text-base"
                 placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
               />
+              <p className="text-xs text-red-500">Required*</p>{" "}
+              
             </div>
           ))}
           <div>
-            <Label className="font-bold mr-2" htmlFor="affiliation">
-              Affiliation:
-            </Label>
             <select
               id="affiliation"
               name="affiliation"
@@ -134,11 +133,13 @@ export default function RegistrationForm() {
               onChange={handleInputChange}
               className="rounded-lg shadow-md h-10 pl-2 pr-1 text-base"
             >
-              {["Optional", "Participant", "Founder"].map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
+              {["Affiliation? (optional)", "Participant", "Founder"].map(
+                (option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                )
+              )}
             </select>
           </div>
         </div>
@@ -148,7 +149,7 @@ export default function RegistrationForm() {
         onClick={handleRegisterOnly}
         className={`w-full text-white bg-black shadow-xl transition-colors duration-300 rounded-lg h-10`}
       >
-        Register Only
+        Register
       </Button>
       {isMobile && (
         <Button
@@ -184,7 +185,7 @@ export default function RegistrationForm() {
         Contest Results
       </Button>
       <p className="text-left text-sm text-gray-500 mt-0">
-        (Results available September 28th)
+        Results available September 28th
       </p>
       {isScanning && (
         <div className="mt-0 rounded-lg overflow-hidden">
