@@ -108,9 +108,7 @@ export default function RegistrationForm() {
       onSubmit={handleCapture}
       className="scale-90 space-y-7 max-w-md mx-auto p-6 bg-gradient-to-t from-[rgba(255,255,255,0.8)] to-[rgba(255,255,255,0.6)] rounded-2xl shadow-lg backdrop-filter backdrop-blur-md"
     >
-      <h2 className="text-2xl font-bold mb-2">
-        Startup Week RI Registration
-      </h2>
+      <h2 className="text-2xl font-bold mb-2">Startup Week RI Registration</h2>
       {!isScanning && (
         <div className="space-y-4">
           {["name", "email", "phone"].map((field) => (
@@ -127,7 +125,6 @@ export default function RegistrationForm() {
                   field.charAt(0).toUpperCase() + field.slice(1)
                 } (Required)`}
               />
-              
             </div>
           ))}
           <div>
@@ -178,7 +175,7 @@ export default function RegistrationForm() {
         className={`w-full border-2 ${
           isAvailable
             ? "border-black text-black"
-            : "border-gray-400 text-gray-400 cursor-not-allowed"
+            : "border-black text-black opacity-50  cursor-not-allowed"
         } bg-transparent rounded-lg h-10 mt-2 transition-colors duration-300`}
         onClick={() =>
           isAvailable &&
@@ -188,7 +185,7 @@ export default function RegistrationForm() {
       >
         Contest Results
       </Button>
-      <p className="text-left text-sm text-gray-500 mt-0">
+      <p className="text-left text-sm text-black opacity-50 ">
         Results available September 28th
       </p>
       {showScanner && (
