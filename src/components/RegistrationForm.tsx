@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Label } from "../styles/ui/label";
 import { Input } from "../styles/ui/input";
 import { Button } from "../styles/ui/button";
 import QrReader from "react-qr-reader";
@@ -17,13 +16,14 @@ export default function RegistrationForm() {
   const [isScanning, setIsScanning] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [showScanner, setShowScanner] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768); // Adjust the width as needed
+      setIsMobile(window.innerWidth <= 768);
     };
 
-    handleResize(); // Check on mount
+    handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -40,18 +40,17 @@ export default function RegistrationForm() {
 
   const handleCapture = async (e: React.FormEvent) => {
     e.preventDefault();
-    setErrorMessage(null);
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       setErrorMessage("Please enter a valid email address.");
       return;
     }
     setIsSubmitted(true);
     setIsScanning(true);
+    setShowScanner(true);
   };
 
   const handleRegisterOnly = async (e: React.FormEvent) => {
     e.preventDefault();
-    setErrorMessage(null);
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       setErrorMessage("Please enter a valid email address.");
       return;
@@ -76,6 +75,7 @@ export default function RegistrationForm() {
 
         if (response.ok) {
           setIsScanning(false);
+          setShowScanner(false);
           alert("Success!");
           setFormData({
             name: "",
@@ -87,6 +87,7 @@ export default function RegistrationForm() {
         } else {
           setErrorMessage(responseData.error);
           setIsScanning(false);
+          setShowScanner(false);
           if (responseData.error === "This event was already recorded.") {
             alert(responseData.error);
           }
@@ -94,6 +95,7 @@ export default function RegistrationForm() {
       } catch {
         setErrorMessage("An unexpected error occurred.");
         setIsScanning(false);
+        setShowScanner(false);
       }
       setIsSubmitting(false);
     }
@@ -104,10 +106,10 @@ export default function RegistrationForm() {
   return (
     <form
       onSubmit={handleCapture}
-      className="scale-90 filter-blur-100 space-y-7 max-w-md mx-auto p-6 bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.7)] rounded-2xl shadow-lg"
+      className="scale-90 space-y-7 max-w-md mx-auto p-6 bg-gradient-to-t from-[rgba(255,255,255,0.8)] to-[rgba(255,255,255,0.6)] rounded-2xl shadow-lg backdrop-filter backdrop-blur-md"
     >
-      <h2 className="text-2xl font-bold mb-[-5px] p-0">
-        Startup Week Rhode Island Registration
+      <h2 className="text-2xl font-bold mb-2">
+        Startup Week RI Registration
       </h2>
       {!isScanning && (
         <div className="space-y-4">
@@ -120,10 +122,12 @@ export default function RegistrationForm() {
                 value={formData[field as keyof typeof formData]}
                 onChange={handleInputChange}
                 required
-                className="rounded-lg shadow-md h-10 pl-2 text-base border-0"
-                placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
+                className="rounded-lg h-10 pl-3 text-md border-0"
+                placeholder={`${
+                  field.charAt(0).toUpperCase() + field.slice(1)
+                } (Required)`}
               />
-              <p className="text-xs text-gray-500">Required*</p>{" "}
+              
             </div>
           ))}
           <div>
@@ -140,14 +144,14 @@ export default function RegistrationForm() {
                 </option>
               ))}
             </select>
-            <p className="text-xs text-gray-500">Optional</p>{" "}
+            <p className="text-xs text-black opacity-50 pt-1">Optional</p>
           </div>
         </div>
       )}
       <Button
         type="button"
         onClick={handleRegisterOnly}
-        className={`w-full text-white bg-black shadow-xl transition-colors duration-300 rounded-lg h-10`}
+        className="w-full text-white bg-black font-bold shadow-xl transition-colors duration-300 rounded-lg h-10"
       >
         Register
       </Button>
@@ -159,7 +163,7 @@ export default function RegistrationForm() {
               ? "bg-yellow-500"
               : errorMessage
               ? "bg-red-500"
-              : "text-white bg-black shadow-xl"
+              : "text-white font-bold bg-black shadow-xl"
           } transition-colors duration-300 rounded-lg h-10`}
         >
           {isScanning
@@ -187,7 +191,7 @@ export default function RegistrationForm() {
       <p className="text-left text-sm text-gray-500 mt-0">
         Results available September 28th
       </p>
-      {isScanning && (
+      {showScanner && (
         <div className="mt-0 rounded-lg overflow-hidden">
           <QrReader
             delay={300}
