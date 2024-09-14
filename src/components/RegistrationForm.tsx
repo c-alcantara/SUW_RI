@@ -134,7 +134,7 @@ export default function RegistrationForm() {
   return (
     <form
       onSubmit={handleCapture}
-      className="border-2 border-white space-y-7 max-w-md mx-auto p-6 bg-gradient-to-t from-[rgba(255,255,255,0.95)] to-[rgba(255,255,255,0.6)] rounded-2xl shadow-lg backdrop-filter backdrop-blur-md"
+      className="scale-90 border-2 border-white space-y-7 max-w-md mx-auto p-6 bg-gradient-to-t from-[rgba(255,255,255,0.95)] to-[rgba(255,255,255,0.6)] rounded-2xl shadow-lg backdrop-filter backdrop-blur-md"
     >
       <h2 className="text-2xl font-bold mb-2">Startup Week RI Registration</h2>
       {!isScanning && (
