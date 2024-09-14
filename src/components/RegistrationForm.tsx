@@ -38,16 +38,6 @@ export default function RegistrationForm() {
     }));
   };
 
-  const handleCapture = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      setErrorMessage("Please enter a valid email address.");
-      return;
-    }
-    setIsSubmitted(true);
-    setIsScanning(true);
-    setShowScanner(true);
-  };
 
   const handleRegisterOnly = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,51 +46,89 @@ export default function RegistrationForm() {
       return;
     }
 
-    await handleScan(null);
-    setIsSubmitting(false);
-  };
+    // Directly submit the form data without scanning
+    const response = await fetch("/api/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData), // Use formData directly
+    });
 
-  const handleScan = async (data: string | null) => {
-    if (!isSubmitting) {
-      setIsSubmitting(true);
-      try {
-        const submitData = data ? { ...formData, event: data } : formData;
-        const response = await fetch("/api/submit", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(submitData),
-        });
+    const responseData = await response.json();
 
-        const responseData = await response.json();
-
-        if (response.ok) {
-          setIsScanning(false);
-          setShowScanner(false);
-          alert("Success!");
-          setFormData({
-            name: "",
-            email: "",
-            phone: "",
-            affiliation: "Optional",
-            event: "",
-          });
-        } else {
-          setErrorMessage(responseData.error);
-          setIsScanning(false);
-          setShowScanner(false);
-          if (responseData.error === "This event was already recorded.") {
-            alert(responseData.error);
-          }
-        }
-      } catch {
-        setErrorMessage("An unexpected error occurred.");
-        setIsScanning(false);
-        setShowScanner(false);
+    if (response.ok) {
+      alert("Success!"); // Show success alert
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        affiliation: "Optional",
+        event: "",
+      });
+    } else {
+      setErrorMessage(responseData.error);
+      if (responseData.error === "This event was already recorded.") {
+        alert(responseData.error);
       }
-      setIsSubmitting(false);
     }
   };
 
+  const handleScan = async (data: string | null) => {
+    if (data) {
+      // Check if data is not null
+      if (!isSubmitting) {
+        setIsSubmitting(true);
+        try {
+          const submitData = { ...formData, event: data }; // Use scanned data
+          const response = await fetch("/api/submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(submitData),
+          });
+
+          const responseData = await response.json();
+
+          if (response.ok) {
+            setIsScanning(false);
+            setShowScanner(false);
+            alert("Success!"); // Show success alert
+            setFormData({
+              name: "",
+              email: "",
+              phone: "",
+              affiliation: "Optional",
+              event: "",
+            });
+          } else {
+            setErrorMessage(responseData.error);
+            setIsScanning(false);
+            setShowScanner(false);
+            if (responseData.error === "This event was already recorded.") {
+              alert(responseData.error);
+            }
+          }
+        } catch {
+          setErrorMessage("An unexpected error occurred.");
+          setIsScanning(false);
+          setShowScanner(false);
+        }
+        setIsSubmitting(false);
+      }
+    } else {
+      // Optionally handle the case where no data is scanned
+      console.log("No QR code scanned.");
+    }
+  };
+
+  const handleCapture = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      setErrorMessage("Please enter a valid email address.");
+      return;
+    }
+    setIsSubmitted(true);
+    setIsScanning(true);
+    setShowScanner(true); // Show the scanner when capturing
+  };
   const isAvailable = new Date("2024-09-28") <= new Date();
 
   return (
@@ -153,7 +181,7 @@ export default function RegistrationForm() {
           onClick={handleRegisterOnly}
           className={`w-1/2 text-white bg-black shadow-xl transition-colors duration-300 rounded-lg h-10`}
         >
-          Register Only
+          Register
         </Button>
         {isMobile && (
           <Button
@@ -172,14 +200,16 @@ export default function RegistrationForm() {
               ? "Scan QR Code"
               : errorMessage || "Capture QR Code"}
           </Button>
+          
         )}
       </div>
+            <p className="text-left text-sm text-black  ">Scanning a QR code will register you if you are not already registered. Please ensure your information is entered the same in order to correctly count your event entries.</p>
       <Button
         type="button"
         className={`w-full border-2 ${
           isAvailable
             ? "border-black text-black"
-            : "border-black text-black opacity-50  cursor-not-allowed"
+            : "border-black text-black  cursor-not-allowed"
         } bg-transparent rounded-xl h-10 mt-0 transition-colors duration-300`}
         onClick={() =>
           isAvailable &&
@@ -189,7 +219,7 @@ export default function RegistrationForm() {
       >
         Contest Results
       </Button>
-      <p className="text-left text-sm text-black opacity-50 ">
+      <p className="text-left text-sm text-black  ">
         Results available September 28th
       </p>
       {showScanner && (
