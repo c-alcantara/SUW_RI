@@ -129,7 +129,7 @@ export default function RegistrationForm() {
     setIsScanning(true);
     setShowScanner(true); // Show the scanner when capturing
   };
-  const isAvailable = new Date("2024-09-28") <= new Date();
+  const isAvailable = new Date("2024-09-14") <= new Date();
 
   return (
     <form
