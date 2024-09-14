@@ -140,7 +140,7 @@ export default function RegistrationForm() {
     sound.play();
   }
 
-  document.getElementsByTagName("button")[0].addEventListener("click", ding);
+
 
   return (
     <form
