@@ -116,9 +116,9 @@ export default function Results348402475920572380527() {
   return (
     <div className="container mx-auto py-10 h-screen flex flex-col items-center justify-center relative">
       {showBckg && <div className="fade-out"></div>}
-      <div className="relative z-10 bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.7)] rounded-2xl shadow-lg p-4 max-w-md mb-6">
+      <div className="relative z-10 border-2 border-white space-y-2 max-w-lg mx-auto p-4 bg-gradient-to-t from-[rgba(255,255,255,0.95)] to-[rgba(255,255,255,0.6)] rounded-2xl shadow-lg backdrop-filter backdrop-blur-md p-4 max-w-md mb-6">
         <h2 className="text-2xl font-bold mb-1">SUWRI Results</h2>
-        <p>Tap event count to show the events visited</p>
+        <p>Click or tap on a row to see their attended events</p>
         <table className="min-w-full bg-transparent">
           <thead>
             <tr>
@@ -131,24 +131,24 @@ export default function Results348402475920572380527() {
           <tbody>
             {data.map((item, index) => (
               <Fragment key={item.$id}>
-                <tr>
+                <tr
+                  onClick={() => toggleExpand(item.$id)}
+                  className="border-black cursor-pointer  text-md border-black px-4 py-2 "
+                >
                   <td className="border-black px-4 py-2">{index + 1}</td>
                   <td className="border-black px-4 py-2">{item.id}</td>
                   <td className="border-black px-4 py-2">{item.displayName}</td>
-                  <td
-                    className="border-black px-2 py-2 cursor-pointer font-bold text-lg border-black px-4 py-2 "
-                    onClick={() => toggleExpand(item.$id)}
-                  >
+                  <td className="border-black px-2 py-2 px-4 py-2 ">
                     {item.eventCount}
                   </td>
                 </tr>
                 {expandedEntry === item.$id && (
                   <tr>
-                    <td colSpan={4} className="border-black px-4 py-2">
+                    <td colSpan={4} className="text-sm border-black px-4 py-2">
                       <ul>
                         {item.events.map((event, index) => (
-                          <li key={index} className="font-bold ">
-                            {event}
+                          <li key={index} className="italic">
+                            {index + 1}. {event}
                           </li>
                         ))}
                       </ul>
@@ -160,7 +160,7 @@ export default function Results348402475920572380527() {
           </tbody>
         </table>
       </div>
-      <div className="relative z-10 bg-gradient-to-t from-[rgba(255,255,255,1)] to-[rgba(255,255,255,.7)] rounded-2xl shadow-lg p-4 max-w-md">
+      <div className="relative z-10 border-2 border-white space-y-2 max-w-lg mx-auto p-3 bg-gradient-to-t from-[rgba(255,255,255,0.95)] to-[rgba(255,255,255,0.6)] rounded-2xl shadow-lg backdrop-filter backdrop-blur-md p-4 max-w-md">
         <table className="min-w-full bg-transparent">
           <thead>
             <tr>
