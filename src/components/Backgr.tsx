@@ -3,7 +3,7 @@
 const Backgr = () => {
   //Noise & Texture plugin developed byhttps://x.com/intent/follow?screen_name=rogie
   return (
-    <div className="  top-[-100px] cover fixed  w-[2000px] h-[100%]  z-[-1]">
+    <div className="  top-[-100px] cover fixed  w-[2000px] h-[110%]  z-[-1]">
       <iframe
         width="110%"
         height="110%"
