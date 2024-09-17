@@ -75,7 +75,16 @@ export default function RegistrationForm() {
         `Hello ${formData.name}, you can now scan a QR code`
       ) {
         setErrorMessage(responseData.error); // Show alert for already registered
-setIsSubmitted(true);
+ setButtonColor("bg-green-500"); // Change button color to green
+ setButtonText("Success"); // Change button text to "Success"
+ setIsSubmitted(true); // Update state to show the Scan QR Code button
+
+ // Change back to "Scan QR Code" after 1 second
+ setTimeout(() => {
+   setButtonText("Scan QR Code");
+   setButtonColor("bg-black"); // Reset button color
+   setShowScanner(true);
+ }, 1000);
       } else {
         setErrorMessage(responseData.error);
       }
