@@ -64,7 +64,14 @@ export default async function handler(
           .json({ success: false, error: "This event was already recorded." });
         return;
       }
-
+   if (isDuplicate && req.body.event == "Registration") {
+  const foundEntryName = req.body.name; // Assuming the name is in the request body
+  res.status(400).json({
+    success: false,
+    error: `Hello ${foundEntryName}, Click OK to scan a QR code`,
+  });
+  return;
+   }
       // Create a new document in the database
       const response = await databases.createDocument(
         process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,

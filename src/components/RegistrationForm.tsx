@@ -76,6 +76,7 @@ export default function RegistrationForm() {
         setErrorMessage(responseData.error);
         if (responseData.error === "This event was already recorded.") {
           alert(responseData.error);
+          setErrorMessage("");
         }
       }
     }
