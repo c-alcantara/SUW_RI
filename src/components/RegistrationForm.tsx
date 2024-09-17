@@ -189,17 +189,17 @@ export default function RegistrationForm() {
       <div className="flex justify-between space-x-3">
         {" "}
         {/* Flex container for buttons */}
-        {/* <Button
+        <Button
           type="button"
           onClick={handleRegisterOnly}
           className={`w-1/2 text-white bg-black shadow-xl transition-colors duration-300 rounded-lg h-10`}
         >
-          Register
-        </Button> */}
+          Register Only
+        </Button>
         {isMobile && (
           <Button
             type="submit"
-            className={`w-full ${
+            className={`w-1/2 ${
               isScanning
                 ? "bg-yellow-500"
                 : errorMessage
