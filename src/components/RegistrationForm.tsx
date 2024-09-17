@@ -116,7 +116,9 @@ function ding() {
             <Input
               id={field}
               name={field}
-              type={field === "email" ? "email" : "text"}
+              type={
+                field === "phone" ? "tel" : field === "email" ? "email" : "text"
+              } // Change here
               value={formData[field as keyof typeof formData]}
               onChange={handleInputChange}
               required
