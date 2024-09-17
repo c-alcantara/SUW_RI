@@ -121,7 +121,7 @@ html {
 }
 
 .fade-in {
-  animation: fadeIn .5s; /* Fade in animation */
+  animation: fadeIn .4s; /* Fade in animation */
 }
 
 @keyframes fadeOut {

@@ -1,8 +1,4 @@
-import { BrowserRouter as Router } from "react-router-dom";
-import RegistrationForm from "../components/RegistrationForm";
-import { Fragment } from "react";
-import { useEffect, useState } from "react";
-
+import React, { Fragment, useEffect, useState } from "react";
 import AltBackground from "@/components/AltBackground";
 import { Client, Databases } from "appwrite"; // Updated import
 
@@ -24,9 +20,7 @@ interface Entry {
   id: string;
 }
 
-
-
-export default function Results348402475920572380527() {
+const Results348402475920572380527: React.FC = () => {
   const [showBckg, setShowBckg] = useState<boolean>(true);
   const [data, setData] = useState<Entry[]>([]);
   const [eventSummary, setEventSummary] = useState<Record<string, number>>({});
@@ -52,41 +46,37 @@ export default function Results348402475920572380527() {
         response.documents.forEach((item: any) => {
           const key = `${item.name}-${item.email}-${item.phone}`; // Unique key for each entry
           if (!uniqueEntries.has(key)) {
-            // Check if event is not empty or null
             if (item.event) {
               uniqueEntries.set(key, {
                 $id: item.$id,
-                name: item.name, // Preserve name
-                email: item.email, // Preserve email
-                phone: item.phone, // Preserve phone
-                eventCount: 1, // Start count at 1 for the first occurrence
-                events: [item.event], // Store the event name in an array
+                name: item.name,
+                email: item.email,
+                phone: item.phone,
+                eventCount: 1,
+                events: [item.event],
                 displayName: item.name,
-                id: item.phone ? item.phone.slice(-4) : "", // Add last 4 digits of phone as ID
+                id: item.phone ? item.phone.slice(-4) : "",
               });
             }
           } else {
             const entry = uniqueEntries.get(key)!;
-            // Only increment if the event is valid
             if (item.event) {
-              entry.eventCount += 1; // Increment event count for subsequent occurrences
-              entry.events.push(item.event); // Add the event name to the array
+              entry.eventCount += 1;
+              entry.events.push(item.event);
             }
           }
         });
 
         const sortedData = Array.from(uniqueEntries.values()).sort(
           (a, b) => b.eventCount - a.eventCount
-        ); // Sort by event count in descending order
+        );
 
-        setData(sortedData); // Set sorted data
+        setData(sortedData);
 
-        // Count unique users per event
         const eventCount = new Map<string, Set<string>>();
         response.documents.forEach((item: any) => {
           const eventName = item.event;
           const userName = item.name;
-          // Only count valid events
           if (eventName) {
             if (!eventCount.has(eventName)) {
               eventCount.set(eventName, new Set());
@@ -95,7 +85,6 @@ export default function Results348402475920572380527() {
           }
         });
 
-        // Prepare summary data
         const summary = Object.fromEntries(
           Array.from(eventCount.entries()).map(([event, users]) => [
             event,
@@ -108,7 +97,7 @@ export default function Results348402475920572380527() {
       }
     };
 
-    fetchData(); // Call the fetchData function to resolve the error
+    fetchData();
   }, []);
 
   const toggleExpand = (entryId: string) => {
@@ -119,7 +108,7 @@ export default function Results348402475920572380527() {
     <div className="container mx-auto py-10 h-screen flex flex-col items-center justify-center relative">
       {showBckg && <div className="fade-out"></div>}
       <div className="relative z-10 border-2 border-white space-y-2 max-w-lg mx-auto p-4 bg-gradient-to-t from-[rgba(255,255,255,0.95)] to-[rgba(255,255,255,0.6)] rounded-2xl shadow-lg backdrop-filter backdrop-blur-md p-4 max-w-md mb-6">
-        <h2 className="text-2xl font-bold mb-1">SUWRI Results</h2>
+        <h2 className="text-2xl font-bold mb-1">Startup Week RI Results</h2>
         <p>Click or tap on a row to see their attended events</p>
         <table className="min-w-full bg-transparent">
           <thead>
@@ -137,11 +126,29 @@ export default function Results348402475920572380527() {
                   onClick={() => toggleExpand(item.$id)}
                   className="border-black cursor-pointer text-md border-black px-4 py-2"
                 >
-                  <td className="border-black px-4 py-2">{index + 1}</td>
+                  <td className="border-black px-4 py-2 flex items-center">
+                    <span
+                      className={`ml-2 transform transition-transform ${
+                        expandedEntry === item.$id ? "rotate-90" : ""
+                      }`}
+                      style={{
+                        display: "inline-block",
+                        width: "0",
+                        height: "0",
+                        marginLeft: "1px",
+                        marginRight: "10px",
+                        borderTop: "5px solid transparent",
+                        borderBottom: "5px solid transparent",
+                        borderLeft: "5px solid black",
+                      }}
+                    ></span>
+                   
+                    <span>{index + 1}</span>
+                  </td>
                   <td className="border-black px-4 py-2">{item.id}</td>
                   <td className="border-black px-4 py-2">{item.displayName}</td>
-                  <td className="border-black px-2 py-2 px-4 py-2 ">
-                   { item.eventCount}
+                  <td className="font-bold border-black px-2 py-2 px-4 py-2 ">
+                    {item.eventCount}
                   </td>
                 </tr>
                 {expandedEntry === item.$id && (
@@ -175,7 +182,7 @@ export default function Results348402475920572380527() {
             </tr>
             <tr>
               <th className="border-black px-4 py-2">Event</th>
-              <th className="border-black  px-4 py-2">Count</th>
+              <th className="border-black px-4 py-2">Count</th>
             </tr>
           </thead>
           <tbody>
@@ -192,4 +199,6 @@ export default function Results348402475920572380527() {
       <AltBackground />
     </div>
   );
-}
+};
+
+export default Results348402475920572380527;
