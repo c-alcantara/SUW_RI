@@ -13,11 +13,11 @@ export default function RegistrationForm() {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [isScanning, setIsScanning] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [showScanner, setShowScanner] = useState(false);
-  const [buttonText, setButtonText] = useState("Register"); // State for button text
+  const [isScanning, setIsScanning] = useState(false); // State for scanning
+  const [buttonText, setButtonText] = useState("Connect"); // State for button text
   const [buttonColor, setButtonColor] = useState("bg-black"); // State for button color
 
   useEffect(() => {
@@ -121,6 +121,7 @@ export default function RegistrationForm() {
 
   const handleScanButtonClick = () => {
     setShowScanner((prev) => !prev); // Toggle scanner visibility
+    setIsScanning(true); // Set scanning to true when scanner is shown
   };
 
   return (
@@ -186,9 +187,7 @@ export default function RegistrationForm() {
       )}
       <div>
         <p className="text-left text-sm text-black  ">
-          Scanning a QR code will register you if you are not already
-          registered. Please ensure your information is entered the same in
-          order to correctly count your event entries.
+         
         </p>
         <Button
           type="button"
