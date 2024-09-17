@@ -68,7 +68,7 @@ function ding() {
         }
       }
     };
-
+  const isAvailable = new Date("2024-09-14") <= new Date();
   const handleScan = async (data: string | null) => {
     if (data) {
       if (!isSubmitting) {
@@ -164,6 +164,31 @@ function ding() {
           />
         </div>
       )}
+      <div>
+        <p className="text-left text-sm text-black  ">
+          Scanning a QR code will register you if you are not already
+          registered. Please ensure your information is entered the same in
+          order to correctly count your event entries.
+        </p>
+        <Button
+          type="button"
+          className={`w-full border-2 ${
+            isAvailable
+              ? "border-black text-black"
+              : "border-black text-black  cursor-not-allowed"
+          } bg-transparent rounded-xl h-10 mt-0 transition-colors duration-300`}
+          onClick={() =>
+            isAvailable &&
+            (window.location.href = "/Results348402475920572380527")
+          }
+          disabled={!isAvailable}
+        >
+          Contest Results
+        </Button>
+        <p className="text-left text-sm text-black  ">
+          Results available September 28th
+        </p>
+      </div>
       {errorMessage && <p className="text-red-500">{errorMessage}</p>}
     </form>
   );
