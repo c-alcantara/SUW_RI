@@ -72,6 +72,7 @@ export default function RegistrationForm() {
       setTimeout(() => {
         setButtonText("Scan QR Code");
         setButtonColor("bg-black"); // Reset button color
+        setShowScanner(true);
       }, 1000);
     } else {
       if (responseData.error === "Already registered") {
@@ -130,6 +131,13 @@ export default function RegistrationForm() {
       className="scale-90 border-2 border-white space-y-7 max-w-md mx-auto p-6 bg-gradient-to-t from-[rgba(255,255,255,0.95)] to-[rgba(255,255,255,0.6)] rounded-2xl shadow-lg backdrop-filter backdrop-blur-md"
     >
       <h2 className="text-2xl font-bold mb-2">Startup Week RI Registration</h2>
+      <p>
+        We’re bringing together entrepreneurs, local leaders, students,
+        corporations, investors and friends together to connect, collaborate and
+        grow through entrepreneurial events. Across the state, Rhode Island’s
+        Innovation Community has come together to showcase their events during
+        this week.
+      </p>
       <div className="space-y-4">
         {["name", "email", "phone"].map((field) => (
           <div key={field}>
@@ -186,9 +194,7 @@ export default function RegistrationForm() {
         </div>
       )}
       <div>
-        <p className="text-left text-sm text-black  ">
-         
-        </p>
+        <p className="text-left text-sm text-black  "></p>
         <Button
           type="button"
           className={`w-full border-2 ${
