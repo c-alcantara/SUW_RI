@@ -58,13 +58,14 @@ export default function RegistrationForm() {
     if (response.ok) {
       ding(); // Trigger sound
       alert("Success!"); // Show success alert
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        affiliation: "Optional",
-        event: "",
-      });
+      // Remove the reset of formData
+      // setFormData({
+      //   name: "",
+      //   email: "",
+      //   phone: "",
+      //   affiliation: "Optional",
+      //   event: "",
+      // });
     } else {
       setErrorMessage(responseData.error);
       if (responseData.error === "This event was already recorded.") {
@@ -93,13 +94,14 @@ export default function RegistrationForm() {
             setIsScanning(false);
             setShowScanner(false);
             alert("Success!"); // Show success alert
-            setFormData({
-              name: "",
-              email: "",
-              phone: "",
-              affiliation: "Optional",
-              event: "",
-            });
+            // Remove the reset of formData
+            // setFormData({
+            //   name: "",
+            //   email: "",
+            //   phone: "",
+            //   affiliation: "Optional",
+            //   event: "",
+            // });
           } else {
             setErrorMessage(responseData.error);
             setIsScanning(false);
