@@ -58,7 +58,7 @@ export default async function handler(
 
       // Check for duplicates
       const isDuplicate = await checkDuplicate(req.body);
-      if (isDuplicate) {
+      if (isDuplicate && req.body.event != "Registration") {
         res
           .status(400)
           .json({ success: false, error: "This event was already recorded." });
