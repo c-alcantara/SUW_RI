@@ -70,14 +70,14 @@ export default function RegistrationForm() {
         setShowScanner(true);
       }, 1000);
     } else {
-      if (responseData.error === "Already registered") {
-        alert("Already registered"); // Show alert for already registered
+      if (
+        responseData.error ===
+        `Hello ${formData.name}, you can now scan a QR code`
+      ) {
+        setErrorMessage(responseData.error()); // Show alert for already registered
+        
       } else {
         setErrorMessage(responseData.error);
-        if (responseData.error === "This event was already recorded.") {
-          alert(responseData.error);
-          setErrorMessage("");
-        }
       }
     }
   };
@@ -108,6 +108,7 @@ export default function RegistrationForm() {
             if (responseData.error === "This event was already recorded.") {
               alert(responseData.error);
              setShowScanner(false);
+              setErrorMessage("");
               //  window.location.reload();
             }
           }
@@ -212,7 +213,7 @@ export default function RegistrationForm() {
           Results available September 28th
         </p>
       </div>
-      {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+      {errorMessage && <p className="text-yellow-500">{errorMessage}</p>}
     </form>
   );
 }
