@@ -74,8 +74,8 @@ export default function RegistrationForm() {
         responseData.error ===
         `Hello ${formData.name}, you can now scan a QR code`
       ) {
-        setErrorMessage(responseData.error()); // Show alert for already registered
-        
+        setErrorMessage(responseData.error); // Show alert for already registered
+setIsSubmitted(true);
       } else {
         setErrorMessage(responseData.error);
       }
