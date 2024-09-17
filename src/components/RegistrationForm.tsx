@@ -115,10 +115,11 @@ export default function RegistrationForm() {
       onSubmit={handleRegisterOnly}
       className="scale-90 border-2 border-white space-y-7 max-w-md mx-auto p-6 bg-gradient-to-t from-[rgba(255,255,255,0.95)] to-[rgba(255,255,255,0.6)] rounded-2xl shadow-lg backdrop-filter backdrop-blur-md"
     >
-      <h2 className="text-2xl font-bold mb-2">
-        Startup Week Rhode Island Registration
+      <h2 className="text-2xl font-bold mb-1">
+        {"Startup Week Rhode Island "}
       </h2>
-      <p text-sm>
+      <p className="text-sm">
+        {" "}
         We’re bringing together entrepreneurs, local leaders, students,
         corporations, investors and friends together to connect, collaborate and
         grow through entrepreneurial events. Across the state, Rhode Island’s
@@ -165,7 +166,7 @@ export default function RegistrationForm() {
         <Button
           type="button"
           onClick={isSubmitted ? handleScanButtonClick : handleRegisterOnly}
-          className={`w-full text-white bg-black shadow-xl transition-colors duration-300 rounded-lg h-10`}
+          className={`w-full text-white bg-black shadow-xl transition-colors duration-300 rounded-xl h-10`}
         >
           {isSubmitted ? "Scan QR Code" : "Register"}
         </Button>
