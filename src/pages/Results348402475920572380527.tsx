@@ -24,20 +24,7 @@ interface Entry {
   id: string;
 }
 
-// Define a mapping of IDs to event names
-const eventMapping: Record<string, string> = {
-  a1b2c3: "Today's Networking Event",
-  d4e5f6: "Tech Innovation Conference",
-  "97h819": "AI in Healthcare Workshop",
-  j1k213: "Digital Marketing Bootcamp",
-  m4n506: "Fin Tech Innovators Meetup",
-  p7q8r9: "Startup Pitch Night HealthTech Expo",
-  s1t2u3: "Clean Energy Summit",
-  v4w5x6: "Blockchain Disruption Conference",
-  y728a1: "Mobile App Development Bootcamp",
-  b2c3d4: "SaaS Growth Conference",
-  e5f6q7: "Other Event", // Optional: Add a default or catch-all event
-};
+
 
 export default function Results348402475920572380527() {
   const [showBckg, setShowBckg] = useState<boolean>(true);
@@ -49,7 +36,7 @@ export default function Results348402475920572380527() {
     const timer = setTimeout(() => {
       setShowBckg(false);
     }, 1100);
-..
+
     return () => clearTimeout(timer); // Cleanup timer on unmount
   }, []);
 
@@ -154,8 +141,7 @@ export default function Results348402475920572380527() {
                   <td className="border-black px-4 py-2">{item.id}</td>
                   <td className="border-black px-4 py-2">{item.displayName}</td>
                   <td className="border-black px-2 py-2 px-4 py-2 ">
-                    {eventMapping[item.id] || item.eventCount}{" "}
-                    {/* Display event name or count */}
+                   { item.eventCount}
                   </td>
                 </tr>
                 {expandedEntry === item.$id && (
