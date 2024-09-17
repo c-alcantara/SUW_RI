@@ -43,32 +43,31 @@ function ding() {
   );
   sound.play();
 }
-  const handleRegisterOnly = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      setErrorMessage("Please enter a valid email address.");
-      return;
-    }
-
-    const response = await fetch("/api/submit", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
-
-    const responseData = await response.json();
-
-    if (response.ok) {
-      ding(); // Trigger sound
-      alert("Success!"); // Show success alert
-      setIsSubmitted(true); // Update state to show the Scan QR Code button
-    } else {
-      setErrorMessage(responseData.error);
-      if (responseData.error === "This event was already recorded.") {
-        alert(responseData.error);
+    const handleRegisterOnly = async (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+        setErrorMessage("Please enter a valid email address.");
+        return;
       }
-    }
-  };
+      ding(); // Trigger sound
+      const response = await fetch("/api/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...formData, event: "Registration" }), // Change here
+      });
+
+      const responseData = await response.json();
+
+      if (response.ok) {
+        alert("Success!"); // Show success alert
+        setIsSubmitted(true); // Update state to show the Scan QR Code button
+      } else {
+        setErrorMessage(responseData.error);
+        if (responseData.error === "This event was already recorded.") {
+          alert(responseData.error);
+        }
+      }
+    };
 
   const handleScan = async (data: string | null) => {
     if (data) {
