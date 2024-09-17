@@ -172,11 +172,7 @@ export default function RegistrationForm() {
         </div>
       )}
       <div>
-        <p className="text-left text-sm text-black  ">
-          Scanning a QR code will register you if you are not already
-          registered. Please ensure your information is entered the same in
-          order to correctly count your event entries.
-        </p>
+
         <Button
           type="button"
           className={`w-full border-2 ${
