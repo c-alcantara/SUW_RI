@@ -106,6 +106,8 @@ export default function RegistrationForm() {
             setIsScanning(false);
             if (responseData.error === "This event was already recorded.") {
               alert(responseData.error);
+             setShowScanner(false);
+              //  window.location.reload();
             }
           }
         } finally {
