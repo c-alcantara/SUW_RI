@@ -6,13 +6,13 @@ import { Client, Databases, ID, Query } from "appwrite";
 const eventMapping: Record<string, string> = {
   a1b2c3: "Today's Networking Event",
   d4e5f6: "Tech Innovation Conference",
-  "97h819": "AI in Healthcare Workshop",
-  j1k213: "Digital Marketing Bootcamp",
-  m4n506: "Fin Tech Innovators Meetup",
+  g7h8i9: "AI in Healthcare Workshop",
+  j1k2l3: "Digital Marketing Bootcamp",
+  m4n5o6: "Fin Tech Innovators Meetup",
   p7q8r9: "Startup Pitch Night",
   s1t2u3: "HealthTech Expo",
   v4w5x6: "Clean Energy Summit",
-  y728a1: "Blockchain Disruption Conference",
+  y7z8a1: "Blockchain Disruption Conference",
   b2c3d4: "Mobile App Development Bootcamp",
   e5f6g7: "SaaS Growth Conference",
 };
@@ -51,7 +51,7 @@ export default async function handler(
     try {
       // Map scanned key to event name
       const scannedKey = req.body.event;
-      const eventName = eventMapping[scannedKey] || "Other";
+      const eventName = eventMapping[scannedKey] || scannedKey;
 
       // Update the request body with the mapped event name
       req.body.event = eventName;

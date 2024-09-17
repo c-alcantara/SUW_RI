@@ -45,32 +45,37 @@ export default function RegistrationForm() {
     sound.play();
   }
 
-  const handleRegisterOnly = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      setErrorMessage("Please enter a valid email address.");
-      return;
-    }
+const handleRegisterOnly = async (e: React.FormEvent) => {
+  e.preventDefault();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    setErrorMessage("Please enter a valid email address.");
+    return;
+  }
 
-    const response = await fetch("/api/submit", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...formData, event: "Registration" }),
-    });
+  const response = await fetch("/api/submit", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ ...formData, event: "Registration" }),
+  });
 
-    const responseData = await response.json();
+  const responseData = await response.json();
 
-    if (response.ok) {
-      ding(); // Trigger sound
-      alert("Success!"); // Show success alert
-      setIsSubmitted(true); // Update state to show the Scan QR Code button
+  if (response.ok) {
+    ding(); // Trigger sound
+    alert("Success!"); // Show success alert
+    setIsSubmitted(true); // Update state to show the Scan QR Code button
+  } else {
+    if (responseData.error === "Already registered") {
+      // Check for already registered error
+      alert("Already registered"); // Show alert for already registered
     } else {
       setErrorMessage(responseData.error);
       if (responseData.error === "This event was already recorded.") {
         alert(responseData.error);
       }
     }
-  };
+  }
+};
 
   const isAvailable = new Date("2024-09-14") <= new Date();
 
@@ -165,11 +170,20 @@ export default function RegistrationForm() {
       <div className="flex justify-between space-x-3">
         <Button
           type="button"
-          onClick={isSubmitted ? handleScanButtonClick : handleRegisterOnly}
-          className={`w-full text-white bg-black shadow-xl transition-colors duration-300 rounded-xl h-10`}
+          onClick={handleRegisterOnly}
+          className={`w-full text-white bg-black shadow-xl transition-colors duration-300 rounded-lg h-10`}
         >
-          {isSubmitted ? "Scan QR Code" : "Register"}
+          Register
         </Button>
+        {isSubmitted && (
+          <Button
+            type="button"
+            onClick={handleScanButtonClick}
+            className={`w-full text-white bg-black shadow-xl transition-colors duration-300 rounded-lg h-10`}
+          >
+            Scan QR Code
+          </Button>
+        )}
       </div>
       {isSubmitted && showScanner && (
         <div className="mt-0 rounded-lg overflow-hidden">
