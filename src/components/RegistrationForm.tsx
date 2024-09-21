@@ -136,13 +136,13 @@ export default function RegistrationForm() {
   return (
     <form
       onSubmit={handleRegisterOnly}
-      className="scale-90 border-2 border-white space-y-7 max-w-md mx-auto p-6 bg-gradient-to-t from-[rgba(255,255,255,0.95)] to-[rgba(255,255,255,0.6)] rounded-2xl shadow-lg backdrop-filter backdrop-blur-md"
+      className="space-y-5 max-w-md w-[90%] mx-auto m-2 p-4 bg-gradient-to-t from-[rgba(255,255,255,0.95)] to-[rgba(255,255,255,0.6)] rounded-2xl shadow-lg backdrop-filter backdrop-blur-md"
     >
-      <h2 className="text-xl font-bold mb-2">Startup Week RI</h2>
+      <h2 className="text-xl font-bold mb-0 ">Register for Startup Week </h2>
       <p>
         We’re bringing together entrepreneurs, local leaders, students,
-        corporations, investors and friends together to connect, collaborate and
-        grow through entrepreneurial events. 
+        corporations, investors and friends together in Rhode Island to connect, collaborate and
+        grow through entrepreneurial events.
       </p>
       <div className="space-y-4">
         {["name", "email", "phone"].map((field) => (
@@ -217,8 +217,8 @@ export default function RegistrationForm() {
           Contest Results
         </Button>
         <p className="text-left text-sm text-black  ">
-          Results available September 28th. 
-          Dev note: This button will be disabled during the event.
+          Results available September 28th. This button will be disabled during
+          the event.
         </p>
       </div>
       {errorMessage && <p className="text-yellow-500">{errorMessage}</p>}
