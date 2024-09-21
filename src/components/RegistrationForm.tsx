@@ -136,15 +136,15 @@ export default function RegistrationForm() {
   return (
     <form
       onSubmit={handleRegisterOnly}
-      className="space-y-5 max-w-md w-[90%] mx-auto m-2 p-4 bg-gradient-to-t from-[rgba(255,255,255,0.95)] to-[rgba(255,255,255,0.6)] rounded-2xl shadow-lg backdrop-filter backdrop-blur-md"
+      className="space-y-5 h-90 max-w-md w-[90%] mx-auto m-2 p-4 bg-gradient-to-t from-[rgba(255,255,255,0.95)] to-[rgba(255,255,255,0.6)] rounded-2xl shadow-lg backdrop-filter backdrop-blur-md"
     >
       <h2 className="text-xl font-bold mb-0 ">Register for Startup Week </h2>
-      <p>
+      <p className="text-sm -translate-y-4">
         We’re bringing together entrepreneurs, local leaders, students,
-        corporations, investors and friends together in Rhode Island to connect, collaborate and
-        grow through entrepreneurial events.
+        corporations, investors and friends together in Rhode Island to connect,
+        collaborate and grow through entrepreneurial events.
       </p>
-      <div className="space-y-4">
+      <div className="-translate-y-4 space-y-3">
         {["name", "email", "phone"].map((field) => (
           <div key={field}>
             <Input
@@ -156,7 +156,7 @@ export default function RegistrationForm() {
               value={formData[field as keyof typeof formData]}
               onChange={handleInputChange}
               required
-              className="rounded-xl h-10 pl-3 text-md border-0"
+              className="rounded-xl h-9 pl-3 text-sm border-0"
               placeholder={`${
                 field.charAt(0).toUpperCase() + field.slice(1)
               } (Required)`}
@@ -169,7 +169,7 @@ export default function RegistrationForm() {
             name="affiliation"
             value={formData.affiliation}
             onChange={handleInputChange}
-            className="rounded-3xl shadow-md h-10 pl-3 text-base"
+            className="rounded-xl shadow-md h-9 pl-3 text-sm"
           >
             {["Affiliation", "Participant", "Founder"].map((option) => (
               <option key={option} value={option}>
@@ -180,17 +180,17 @@ export default function RegistrationForm() {
           <p className="text-xs text-black opacity-50 pt-1">(Optional)</p>
         </div>
       </div>
-      <div className="flex justify-between space-x-3">
+      <div className="-translate-y-4 flex justify-between space-x-2">
         <Button
           type="button"
           onClick={handleRegisterOnly}
-          className={`w-full text-white ${buttonColor} shadow-xl transition-colors duration-300 rounded-lg h-10`}
+          className={`w-full text-white ${buttonColor} shadow-xl transition-colors duration-300 rounded-xl h-10`}
         >
           {buttonText}
         </Button>
       </div>
       {isSubmitted && showScanner && (
-        <div className="mt-0 rounded-lg overflow-hidden">
+        <div className="mt-0 rounded-xl overflow-hidden">
           <QrReader
             delay={300}
             onError={(err) => console.error(err)}
@@ -202,8 +202,8 @@ export default function RegistrationForm() {
       <div>
         <p className="text-left text-sm text-black  "></p>
         <Button
-          type="button"
-          className={`w-full border-2 ${
+          type="button "
+          className={`w-full border-2 -translate-y-5 ${
             isAvailable
               ? "border-black text-black"
               : "border-black text-black  cursor-not-allowed"
@@ -216,12 +216,12 @@ export default function RegistrationForm() {
         >
           Contest Results
         </Button>
-        <p className="text-left text-sm text-black  ">
+        <p className="-translate-y-4 text-left text-xs text-gray-500 p-1  ">
           Results available September 28th. This button will be disabled during
           the event.
         </p>
       </div>
-      {errorMessage && <p className="text-yellow-500">{errorMessage}</p>}
+      {errorMessage && <p className="text-black">{errorMessage}</p>}
     </form>
   );
 }
