@@ -136,7 +136,7 @@ export default function RegistrationForm() {
   return (
     <form
       onSubmit={handleRegisterOnly}
-      className="space-y-5 h-90 max-w-md w-[90%] mx-auto m-2 p-4 bg-gradient-to-t from-[rgba(255,255,255,0.95)] to-[rgba(255,255,255,0.6)] rounded-2xl shadow-lg backdrop-filter backdrop-blur-md"
+      className="space-y-5 h-90 max-w-md w-[90%] mx-auto m-1 p-4 bg-gradient-to-t from-[rgba(255,255,255,0.95)] to-[rgba(255,255,255,0.6)] rounded-2xl shadow-lg backdrop-filter backdrop-blur-md"
     >
       <h2 className="text-xl font-bold mb-0 ">Register for Startup Week </h2>
       <p className="text-sm -translate-y-4">
