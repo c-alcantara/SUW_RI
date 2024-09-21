@@ -109,7 +109,7 @@ const Results348402475920572380527: React.FC = () => {
   return (
     <div className="container mx-auto py-10 h-screen flex flex-col items-center justify-center relative">
       {showBckg && <div className="fade-out"></div>}
-      <div className="relative z-10 border-2 border-white space-y-2 max-w-sm mx-auto p-4 bg-gradient-to-t from-[rgba(255,255,255,0.95)] to-[rgba(255,255,255,0.6)] rounded-2xl shadow-lg backdrop-filter backdrop-blur-md p-4 max-w-md mb-6">
+      <div className="relative z-10 border-2 border-white space-y-2 max-w-sm mx-auto p-4 bg-gradient-to-t from-[rgba(255,255,255,0.95)] to-[rgba(255,255,255,0.6)] rounded-2xl shadow-lg backdrop-filter backdrop-blur-md p-4 max-w-sm mb-6">
         <h2 className="text-2xl font-bold mb-1">Registrations</h2>
         <p>Click or tap on a row to see their attended events</p>
         <table className="min-w-full bg-transparent">
