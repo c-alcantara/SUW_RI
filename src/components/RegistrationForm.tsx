@@ -221,7 +221,9 @@ export default function RegistrationForm() {
           the event.
         </p>
       </div>
-      {errorMessage && <p className="text-black">{errorMessage}</p>}
+      {errorMessage && (
+        <p className="-translate-y-4 text-black">{errorMessage}</p>
+      )}
     </form>
   );
 }
