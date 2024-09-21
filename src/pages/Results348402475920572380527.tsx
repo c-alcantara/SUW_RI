@@ -107,18 +107,18 @@ const Results348402475920572380527: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto py-10 h-screen flex flex-col items-center justify-center relative">
+    <div className="p-5  container mx-auto py-10 h-screen flex flex-col items-center justify-center relative">
       {showBckg && <div className="fade-out"></div>}
-      <div className="scale-90 relative z-10 border-2 border-white space-y-2 max-w-sm mx-auto p-4 bg-gradient-to-t from-[rgba(255,255,255,0.95)] to-[rgba(255,255,255,0.6)] rounded-2xl shadow-lg backdrop-filter backdrop-blur-md p-4 max-w-sm mb-6">
+      <div className="scale-80 relative z-10 border-2 border-white space-y-2 max-w-sm mx-auto p-3 bg-gradient-to-t from-[rgba(255,255,255,0.95)] to-[rgba(255,255,255,0.6)] rounded-2xl shadow-lg backdrop-filter backdrop-blur-md p-4 max-w-sm mb-6">
         <h2 className="text-2xl font-bold mb-1">Registrations</h2>
         <p>Click or tap on a row to see their attended events</p>
-        <table className="min-w-full bg-transparent">
+        <table className=" bg-transparent">
           <thead>
             <tr>
-              <th className="border-black px-4 py-2">Rank</th>
-              <th className="border-black px-4 py-2">ID</th>
-              <th className="border-black px-4 py-2">Name</th>
-              <th className="border-black px-4 py-2">Events</th>
+              <th className="border-black px-2 py-1">Rank</th>
+              <th className="border-black px-2 py-1">ID</th>
+              <th className="border-black px-2 py-1">Name</th>
+              <th className="border-black px-2 py-1">Events</th>
             </tr>
           </thead>
           <tbody>
@@ -126,9 +126,9 @@ const Results348402475920572380527: React.FC = () => {
               <Fragment key={item.$id}>
                 <tr
                   onClick={() => toggleExpand(item.$id)}
-                  className="border-black cursor-pointer text-md border-black px-4 py-2"
+                  className="border-black cursor-pointer text-md border-black px-1 py-1"
                 >
-                  <td className="border-black px-4 py-2 flex items-center">
+                  <td className="border-black px-1 py-2 flex items-center">
                     <span
                       className={`ml-2 transform transition-transform ${
                         expandedEntry === item.$id ? "rotate-90" : ""
@@ -147,7 +147,7 @@ const Results348402475920572380527: React.FC = () => {
 
                     <span>{index + 1}</span>
                   </td>
-                  <td className="border-black px-4 py-2">{item.id}</td>
+                  <td className="border-black px-1 py-1">{item.id}</td>
                   <td className="border-black px-4 py-2">{item.displayName}</td>
                   <td className="font-bold border-black px-2 py-2 px-4 py-2 ">
                     {item.eventCount}
@@ -171,20 +171,19 @@ const Results348402475920572380527: React.FC = () => {
           </tbody>
         </table>
       </div>
-      <div className="relative z-10 border-2 border-white space-y-2 max-w-sm mx-auto p-3 bg-gradient-to-t from-[rgba(255,255,255,0.95)] to-[rgba(255,255,255,0.6)] rounded-2xl shadow-lg backdrop-filter backdrop-blur-md p-4 max-w-md">
+      <div className="relative z-10 border-2 border-white space-y-2 max-w-sm mx-auto p-3 bg-gradient-to-t from-[rgba(255,255,255,0.95)] to-[rgba(255,255,255,0.6)] rounded-2xl shadow-lg backdrop-filter backdrop-blur-md p-4 max-w-sm">
         <table className="min-w-full bg-transparent">
           <thead>
             <tr>
               <th
-                className="border-black px-4 py-2 text-2xl font-bold"
+                className="float-left border-black px-4 py-2 text-2xl font-bold"
                 colSpan={2}
               >
                 Top Events
               </th>
             </tr>
             <tr>
-              <th className="border-black px-4 py-2">Event</th>
-              <th className="border-black px-4 py-2">Count</th>
+    
             </tr>
           </thead>
           <tbody>
@@ -193,7 +192,9 @@ const Results348402475920572380527: React.FC = () => {
               .map(([event, count]) => (
                 <tr key={event}>
                   <td className="border-black px-4 py-2">
-                    {event === "Startup Week RI" ? "Total Registrations" : event}
+                    {event === "Registration"
+                      ? "Total Registrations"
+                      : event}
                   </td>
                   <td className="border-black px-4 py-2">{count}</td>
                 </tr>
