@@ -52,7 +52,7 @@ export default function RegistrationForm() {
     const response = await fetch("/api/submit", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...formData, event: "Registration" }),
+      body: JSON.stringify({ ...formData, event: "Startup Week RI" }),
     });
 
     const responseData = await response.json();
@@ -138,7 +138,7 @@ export default function RegistrationForm() {
       onSubmit={handleRegisterOnly}
       className="scale-90 border-2 border-white space-y-7 max-w-md mx-auto p-6 bg-gradient-to-t from-[rgba(255,255,255,0.95)] to-[rgba(255,255,255,0.6)] rounded-2xl shadow-lg backdrop-filter backdrop-blur-md"
     >
-      <h2 className="text-xl font-bold mb-2">Startup Week RI Registration</h2>
+      <h2 className="text-xl font-bold mb-2">Startup Week RI</h2>
       <p>
         We’re bringing together entrepreneurs, local leaders, students,
         corporations, investors and friends together to connect, collaborate and

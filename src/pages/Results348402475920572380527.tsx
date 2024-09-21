@@ -193,7 +193,7 @@ const Results348402475920572380527: React.FC = () => {
               .map(([event, count]) => (
                 <tr key={event}>
                   <td className="border-black px-4 py-2">
-                    {event === "Registration" ? "Total Registrations" : event}
+                    {event === "Startup Week RI" ? "Total Registrations" : event}
                   </td>
                   <td className="border-black px-4 py-2">{count}</td>
                 </tr>
