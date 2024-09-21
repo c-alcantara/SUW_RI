@@ -202,7 +202,7 @@ export default function RegistrationForm() {
       <div>
         <p className="text-left text-sm text-black  "></p>
         <Button
-          type="button "
+          type="button"
           className={`w-full border-2 -translate-y-5 ${
             isAvailable
               ? "border-black text-black"
