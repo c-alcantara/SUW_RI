@@ -67,11 +67,13 @@ const Results348402475920572380527: React.FC = () => {
           }
         });
 
+     
         const sortedData = Array.from(uniqueEntries.values()).sort(
           (a, b) => b.eventCount - a.eventCount
         );
 
         setData(sortedData);
+
 
         const eventCount = new Map<string, Set<string>>();
         response.documents.forEach((item: any) => {
@@ -108,7 +110,7 @@ const Results348402475920572380527: React.FC = () => {
     <div className="container mx-auto py-10 h-screen flex flex-col items-center justify-center relative">
       {showBckg && <div className="fade-out"></div>}
       <div className="relative z-10 border-2 border-white space-y-2 max-w-lg mx-auto p-4 bg-gradient-to-t from-[rgba(255,255,255,0.95)] to-[rgba(255,255,255,0.6)] rounded-2xl shadow-lg backdrop-filter backdrop-blur-md p-4 max-w-md mb-6">
-        <h2 className="text-2xl font-bold mb-1">Startup Week RI Results</h2>
+        <h2 className="text-2xl font-bold mb-1">Registrations</h2>
         <p>Click or tap on a row to see their attended events</p>
         <table className="min-w-full bg-transparent">
           <thead>
@@ -142,7 +144,7 @@ const Results348402475920572380527: React.FC = () => {
                         borderLeft: "5px solid black",
                       }}
                     ></span>
-                   
+
                     <span>{index + 1}</span>
                   </td>
                   <td className="border-black px-4 py-2">{item.id}</td>
@@ -186,12 +188,16 @@ const Results348402475920572380527: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {Object.entries(eventSummary).map(([event, count]) => (
-              <tr key={event}>
-                <td className="border-black px-4 py-2">{event}</td>
-                <td className="border-black px-4 py-2">{count}</td>
-              </tr>
-            ))}
+            {Object.entries(eventSummary)
+              .sort(([, countA], [, countB]) => countB - countA) // Sort by count in descending order
+              .map(([event, count]) => (
+                <tr key={event}>
+                  <td className="border-black px-4 py-2">
+                    {event === "Registration" ? "Total Registrations" : event}
+                  </td>
+                  <td className="border-black px-4 py-2">{count}</td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
