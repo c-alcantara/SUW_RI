@@ -107,7 +107,7 @@ const Results348402475920572380527: React.FC = () => {
   };
 
   return (
-    <div className="p-5  container mx-auto py-10 h-screen flex flex-col items-center justify-center relative">
+    <div className="p-4 pt-8  container mx-auto py-10 h-screen flex flex-col items-center justify-center relative">
       {showBckg && <div className="fade-out"></div>}
       <div className="scale-80 relative z-10 border-2 border-white space-y-2 max-w-sm mx-auto p-3 bg-gradient-to-t from-[rgba(255,255,255,0.95)] to-[rgba(255,255,255,0.6)] rounded-2xl shadow-lg backdrop-filter backdrop-blur-md p-4 max-w-sm mb-6">
         <h2 className="text-2xl font-bold mb-1">Registrations</h2>
