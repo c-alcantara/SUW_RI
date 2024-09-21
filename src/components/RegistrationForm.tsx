@@ -52,7 +52,7 @@ export default function RegistrationForm() {
     const response = await fetch("/api/submit", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...formData, event: "Startup Week RI" }),
+      body: JSON.stringify({ ...formData, event: "Registration" }),
     });
 
     const responseData = await response.json();
