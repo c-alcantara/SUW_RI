@@ -68,7 +68,11 @@ export default async function handler(
   const foundEntryName = req.body.name; // Assuming the name is in the request body
   res.status(400).json({
     success: false,
-    error: `Hello ${foundEntryName}, you can now scan a QR code`,
+    error: {
+      message: `Welcome back ${foundEntryName}, you can now scan a QR code`,
+      color: "black",
+      bold:true // Specify the desired font color
+    },
   });
   return;
    }
