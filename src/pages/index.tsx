@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import RegistrationForm from "../components/RegistrationForm";
-import Backgr from "../components/Backgr";
+import AltBackground from "../components/AltBackground";
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 export default function Home() {
@@ -22,7 +22,7 @@ export default function Home() {
           </div>
        
       </div>
-      <Backgr />
+      <AltBackground />
     </div>
   );
 }
